@@ -1,0 +1,2 @@
+Brand logo validation — one candidate logo image attached.
+{rag_context}

@@ -1,0 +1,22 @@
+{
+  "name": "256-e2e",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:public": "playwright test tests/smoke/public-pages.spec.ts",
+    "test:journey-a": "playwright test --grep @journey-a",
+    "test:journey-b": "playwright test --grep @journey-b",
+    "test:journey-c": "playwright test --grep @journey-c",
+    "test:journey-d": "playwright test --grep @journey-d",
+    "test:journey-e": "playwright test --grep @journey-e",
+    "test:journeys": "playwright test --grep @journey",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  }
+}

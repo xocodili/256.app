@@ -1,0 +1,162 @@
+<section
+  class="card app-card card--action app-create-entity-card entity-profile-accent--profit"
+  id="create-entity-card"
+  data-entity-type-key="profit"
+>
+  <div class="card-accent" role="presentation"></div>
+  <header class="create-post-card-header">
+    <h1>__CREATE_ENTITY_TITLE__</h1>
+  </header>
+  <p class="sub create-entity-card-lead">@@ui.home.create_entity_profit_intro@@</p>
+
+  <form id="create-entity-form" class="create-entity-form create-entity-form--profit" novalidate>
+    <input type="hidden" id="create-entity-type-id" name="type_id" value="__TYPE_ID__" />
+    <input type="hidden" id="create-entity-location-id" name="location_id" value="" />
+
+    <label for="create-entity-handle" class="create-entity-handle-label">@@ui.home.create_entity_handle_label@@</label>
+    <input
+      id="create-entity-handle"
+      name="handle"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@handle"
+      minlength="3"
+      maxlength="32"
+      required
+      aria-required="true"
+    />
+
+    <label for="create-entity-trading-label" class="create-entity-handle-label">@@ui.home.create_entity_trading_label@@</label>
+    <input
+      id="create-entity-trading-label"
+      name="trading_label"
+      class="search-add-input"
+      type="text"
+      autocomplete="organization"
+      maxlength="512"
+      required
+      aria-required="true"
+    />
+    <p class="hint">@@ui.home.create_entity_trading_hint@@</p>
+
+    <label for="create-entity-legal-name" class="create-entity-handle-label">@@ui.home.create_entity_legal_name_label@@</label>
+    <input
+      id="create-entity-legal-name"
+      name="legal_name"
+      class="search-add-input"
+      type="text"
+      autocomplete="organization"
+      maxlength="512"
+      required
+      aria-required="true"
+    />
+
+    <label for="create-entity-founded" class="create-entity-handle-label">@@ui.home.create_entity_founded_label@@</label>
+    <input id="create-entity-founded" name="founded_at" class="search-add-input" type="date" required aria-required="true" />
+    <p class="hint">@@ui.home.create_entity_founded_hint@@</p>
+
+    <label for="create-entity-description-editor" class="create-entity-handle-label">@@ui.home.create_entity_description_label@@</label>
+    <input type="hidden" id="create-entity-description" name="description" />
+    <div class="create-post-editor-toolbar create-entity-description-toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" data-cmd="bold" class="create-post-editor-btn" aria-label="Bold" title="Bold"><b>B</b></button>
+      <button type="button" data-cmd="italic" class="create-post-editor-btn" aria-label="Italic" title="Italic"><i>I</i></button>
+      <button type="button" data-cmd="underline" class="create-post-editor-btn" aria-label="Underline" title="Underline"><u>U</u></button>
+      <button type="button" data-cmd="foreColor" data-value="#f6f6fa" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f6f6fa" aria-label="White text" title="White text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#f4c430" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f4c430" aria-label="Yellow text" title="Yellow text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4169e1" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4169e1" aria-label="Blue text" title="Blue text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4fc3f7" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4fc3f7" aria-label="Cyan text" title="Cyan text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#1f6b3a" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#1f6b3a" aria-label="Green text" title="Green text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#a3232b" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#a3232b" aria-label="Red text" title="Red text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#7b1e3d" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#7b1e3d" aria-label="Magenta text" title="Magenta text"></button>
+    </div>
+    <div
+      id="create-entity-description-editor"
+      class="create-post-editor create-entity-description-editor"
+      contenteditable="true"
+      role="textbox"
+      aria-multiline="true"
+      aria-label="@@ui.home.create_entity_description_label@@"
+      data-placeholder="@@ui.home.create_entity_description_placeholder@@"
+    ></div>
+    <p id="create-entity-description-char-hint" class="hint create-post-char-hint">0/4000</p>
+
+    <label for="create-entity-intention" class="create-entity-handle-label">@@ui.home.create_entity_intention_label@@</label>
+    <input
+      id="create-entity-intention"
+      name="intention"
+      class="search-add-input"
+      type="text"
+      maxlength="512"
+      autocomplete="off"
+      spellcheck="true"
+    />
+
+    <label for="create-entity-website" class="create-entity-handle-label">@@ui.home.create_entity_website_label@@</label>
+    <input
+      id="create-entity-website"
+      name="website_url"
+      class="search-add-input"
+      type="url"
+      inputmode="url"
+      autocomplete="url"
+      spellcheck="false"
+      placeholder="@@ui.home.create_entity_website_placeholder@@"
+    />
+
+    <label for="create-entity-logo-url" class="create-entity-handle-label">@@ui.home.create_entity_logo_url_label@@</label>
+    <input
+      id="create-entity-logo-url"
+      name="logo_url"
+      class="search-add-input"
+      type="url"
+      inputmode="url"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@@ui.home.create_entity_logo_url_placeholder@@"
+    />
+    <p class="hint">@@ui.home.create_entity_logo_url_hint@@</p>
+
+    <p class="create-entity-handle-label create-entity-place-heading-row">
+      <span id="create-entity-place-heading-text">@@ui.home.create_entity_place_heading@@</span>
+      <span id="create-entity-place-badge" class="handle-availability-badge handle-availability-badge--label" hidden></span>
+    </p>
+    <div class="create-entity-place-row">
+      <input
+        id="create-entity-google-place-query"
+        class="search-add-input"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="@@ui.home.create_entity_place_query_placeholder@@"
+        aria-labelledby="create-entity-place-heading-text"
+      />
+      <input type="hidden" id="create-entity-google-place-id" />
+    </div>
+    <ul id="create-entity-place-results" class="create-entity-place-results" hidden></ul>
+
+    <label for="create-entity-owner-handles" class="create-entity-handle-label">@@ui.home.create_entity_owner_handles_label@@</label>
+    <input
+      id="create-entity-owner-handles"
+      name="owner_handles"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@@ui.home.create_entity_owner_handles_placeholder@@"
+    />
+
+    <p
+      class="hint create-post-submit-status"
+      id="create-entity-status"
+      hidden
+      aria-live="polite"
+    ></p>
+    <p class="hint create-entity-nom-cost" id="create-entity-nom-cost">__CREATE_ENTITY_NOM_COST__</p>
+    <button type="submit" id="create-entity-submit" class="btn-cta">@@ui.home.search_add_card_create_cta@@</button>
+    <p class="auth-flow-back">
+      <button type="button" id="create-entity-back" class="auth-text-btn">@@ui.shared.back@@</button>
+    </p>
+  </form>
+</section>

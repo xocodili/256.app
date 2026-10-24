@@ -1,0 +1,14 @@
+{avc_block}## PORTFOLIO REPLACEMENT
+
+### EVICTED HOST
+{evicted_domain}
+
+### REPLACEMENT CATALOGUE
+{replacement_catalogue}
+
+### EXCLUSIONS
+Already posted content_link_ids: {excluded_content_link_ids}
+Already posted canonical URLs: {excluded_url_canonical}
+Portfolio / tried hosts: {excluded_domains}
+Evicted today: {excluded_domains_evicted}
+{rag_context}

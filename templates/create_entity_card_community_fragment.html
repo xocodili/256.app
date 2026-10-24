@@ -1,0 +1,222 @@
+<section
+  class="card app-card card--action app-create-entity-card entity-profile-accent--community"
+  id="create-entity-card"
+  data-entity-type-key="community"
+>
+  <div class="card-accent" role="presentation"></div>
+  <header class="create-post-card-header">
+    <h1>__CREATE_ENTITY_TITLE__</h1>
+  </header>
+  <p class="sub create-entity-card-lead">@@ui.home.create_entity_community_intro@@</p>
+
+  <form id="create-entity-form" class="create-entity-form create-entity-form--community" novalidate>
+    <input type="hidden" id="create-entity-type-id" name="type_id" value="__TYPE_ID__" />
+    <input type="hidden" id="create-entity-location-id" name="location_id" value="" />
+
+    <label for="create-entity-trading-label" class="create-entity-handle-label">@@ui.home.create_entity_community_name_label@@</label>
+    <input
+      id="create-entity-trading-label"
+      name="trading_label"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      maxlength="512"
+      required
+      aria-required="true"
+    />
+
+    <p class="create-entity-location-heading">@@ui.home.create_entity_community_location_section@@</p>
+
+    <label for="create-entity-community-country" class="create-entity-handle-label">@@ui.home_profile.country_label@@</label>
+    <select
+      id="create-entity-community-country"
+      name="community_country_code"
+      class="search-add-input create-entity-join-policy-select"
+      required
+      aria-required="true"
+      autocomplete="country"
+    >
+      <option value="" disabled __COMMUNITY_COUNTRY_SELECTED_EMPTY__>@@ui.home_profile.country_select_prompt@@</option>
+      __COMMUNITY_COUNTRY_OPTION_ROWS__
+    </select>
+    <p class="hint" id="create-entity-community-location-hint">@@ui.home.create_entity_community_location_global_hint@@</p>
+
+    <fieldset id="create-entity-community-locale-fields" class="create-entity-locale-fields" disabled>
+      <legend class="visually-hidden">@@ui.home.create_entity_community_locale_fieldset_legend@@</legend>
+    <label for="create-entity-community-region" class="create-entity-handle-label">@@ui.home_profile.region_label@@</label>
+    <input
+      id="create-entity-community-region"
+      name="community_region"
+      class="search-add-input"
+      type="text"
+      autocomplete="address-level1"
+      maxlength="128"
+      value="__COMMUNITY_PREFILL_REGION__"
+    />
+
+    <label for="create-entity-community-locality" class="create-entity-handle-label">@@ui.home_profile.locality_label@@</label>
+    <input
+      id="create-entity-community-locality"
+      name="community_locality"
+      class="search-add-input"
+      type="text"
+      autocomplete="address-level2"
+      maxlength="128"
+      value="__COMMUNITY_PREFILL_LOCALITY__"
+    />
+    </fieldset>
+
+    <label for="create-entity-parent-handle" class="create-entity-handle-label">@@ui.home.create_entity_community_parent_label@@</label>
+    <input
+      id="create-entity-parent-handle"
+      name="parent_community_handle"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@@ui.home.search_add_placeholder@@"
+      minlength="3"
+      maxlength="32"
+      required
+      aria-required="true"
+      aria-controls="create-entity-parent-results"
+      aria-expanded="false"
+    />
+    <p class="hint">@@ui.home.create_entity_community_parent_hint@@</p>
+    <p
+      class="hint create-post-submit-status"
+      id="create-entity-parent-search-status"
+      hidden
+      aria-live="polite"
+    ></p>
+    <ul
+      id="create-entity-parent-results"
+      class="search-add-results create-entity-parent-results"
+      aria-live="polite"
+    ></ul>
+    <label for="create-entity-handle" class="create-entity-handle-label">@@ui.home.create_entity_handle_label@@</label>
+    <input
+      id="create-entity-handle"
+      name="handle"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@handle"
+      minlength="3"
+      maxlength="32"
+      required
+      aria-required="true"
+      data-community-handle-auto-suffix="1"
+    />
+    <p class="hint" id="create-entity-community-handle-suffix-hint" hidden aria-live="polite"></p>
+
+    <label for="create-entity-community-join-policy" class="create-entity-handle-label">@@ui.home.create_entity_community_join_policy_label@@</label>
+    <select
+      id="create-entity-community-join-policy"
+      name="join_policy_key"
+      class="search-add-input create-entity-join-policy-select"
+      required
+      aria-required="true"
+    >
+      <option value="open" selected>@@ref_values.social_join_policy.open@@</option>
+      <option value="reviewed">@@ui.home.create_entity_community_join_reviewed_label@@</option>
+      <option value="invite_only">@@ui.home.create_entity_community_join_invite_only_label@@</option>
+      <option value="closed">@@ref_values.social_join_policy.closed@@</option>
+    </select>
+    <p class="hint" id="create-entity-community-join-policy-hint">@@ui.home.create_entity_community_join_open_hint@@</p>
+
+    <label for="create-entity-intention" class="create-entity-handle-label">@@ui.home.create_entity_community_intention_label@@</label>
+    <input
+      id="create-entity-intention"
+      name="intention"
+      class="search-add-input"
+      type="text"
+      maxlength="512"
+      autocomplete="off"
+      spellcheck="true"
+    />
+
+    <label for="create-entity-description-editor" class="create-entity-handle-label">@@ui.home.create_entity_community_description_label@@</label>
+    <input type="hidden" id="create-entity-description" name="description" />
+    <div class="create-post-editor-toolbar create-entity-description-toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" data-cmd="bold" class="create-post-editor-btn" aria-label="Bold" title="Bold"><b>B</b></button>
+      <button type="button" data-cmd="italic" class="create-post-editor-btn" aria-label="Italic" title="Italic"><i>I</i></button>
+      <button type="button" data-cmd="underline" class="create-post-editor-btn" aria-label="Underline" title="Underline"><u>U</u></button>
+      <button type="button" data-cmd="foreColor" data-value="#f6f6fa" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f6f6fa" aria-label="White text" title="White text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#f4c430" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f4c430" aria-label="Yellow text" title="Yellow text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4169e1" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4169e1" aria-label="Blue text" title="Blue text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4fc3f7" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4fc3f7" aria-label="Cyan text" title="Cyan text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#1f6b3a" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#1f6b3a" aria-label="Green text" title="Green text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#a3232b" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#a3232b" aria-label="Red text" title="Red text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#7b1e3d" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#7b1e3d" aria-label="Magenta text" title="Magenta text"></button>
+    </div>
+    <div
+      id="create-entity-description-editor"
+      class="create-post-editor create-entity-description-editor"
+      contenteditable="true"
+      role="textbox"
+      aria-multiline="true"
+      aria-label="@@ui.home.create_entity_community_description_label@@"
+      data-placeholder="@@ui.home.create_entity_community_description_placeholder@@"
+    ></div>
+    <p id="create-entity-description-char-hint" class="hint create-post-char-hint">0/4000</p>
+
+    <div
+      id="create-entity-parent-constitution-wrap"
+      class="create-entity-parent-constitution-wrap"
+      hidden
+      aria-live="polite"
+    ></div>
+
+    <label for="create-entity-community-seed-clause-editor" class="create-entity-handle-label">@@ui.home.create_entity_community_seed_clause_label@@</label>
+    <input type="hidden" id="create-entity-community-seed-clause" name="seed_constitution_clause" value="" />
+    <div class="create-post-editor-toolbar create-entity-seed-clause-toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" data-cmd="bold" class="create-post-editor-btn" aria-label="Bold" title="Bold"><b>B</b></button>
+      <button type="button" data-cmd="italic" class="create-post-editor-btn" aria-label="Italic" title="Italic"><i>I</i></button>
+      <button type="button" data-cmd="underline" class="create-post-editor-btn" aria-label="Underline" title="Underline"><u>U</u></button>
+      <button type="button" data-cmd="foreColor" data-value="#f6f6fa" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f6f6fa" aria-label="White text" title="White text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#f4c430" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f4c430" aria-label="Yellow text" title="Yellow text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4169e1" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4169e1" aria-label="Blue text" title="Blue text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4fc3f7" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4fc3f7" aria-label="Cyan text" title="Cyan text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#1f6b3a" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#1f6b3a" aria-label="Green text" title="Green text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#a3232b" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#a3232b" aria-label="Red text" title="Red text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#7b1e3d" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#7b1e3d" aria-label="Magenta text" title="Magenta text"></button>
+    </div>
+    <div
+      id="create-entity-community-seed-clause-editor"
+      class="create-post-editor create-entity-seed-clause-editor"
+      contenteditable="true"
+      role="textbox"
+      aria-multiline="true"
+      aria-label="@@ui.home.create_entity_community_seed_clause_label@@"
+      data-placeholder="@@ui.home.create_entity_community_seed_clause_placeholder@@"
+    ></div>
+    <p id="create-entity-community-seed-clause-char-hint" class="hint create-post-char-hint">0/2000</p>
+
+    <label for="create-entity-owner-handles" class="create-entity-handle-label">@@ui.home.create_entity_owner_handles_label@@</label>
+    <input
+      id="create-entity-owner-handles"
+      name="owner_handles"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@@ui.home.create_entity_owner_handles_placeholder@@"
+    />
+
+    <p
+      class="hint create-post-submit-status"
+      id="create-entity-status"
+      hidden
+      aria-live="polite"
+    ></p>
+    <p class="hint create-entity-nom-cost" id="create-entity-nom-cost">__CREATE_ENTITY_NOM_COST__</p>
+    <div class="create-entity-submit-row">
+      <button type="submit" id="create-entity-submit" class="btn-cta">@@ui.home.create_entity_community_submit_cta@@</button>
+    </div>
+    <p class="auth-flow-back">
+      <button type="button" id="create-entity-back" class="auth-text-btn">@@ui.shared.back@@</button>
+    </p>
+  </form>
+</section>

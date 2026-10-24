@@ -1,0 +1,2 @@
+-- No-op (greenfield refactor).
+-- Consolidated into `20260415122100_seed_council_communities_consolidated.sql`.

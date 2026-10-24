@@ -1,0 +1,40 @@
+<section class="card auth-card card--action" data-auth-card="register">
+  <div class="card-accent" role="presentation"></div>
+  <h1>@@ui.register.heading@@</h1>
+  <p class="sub">@@ui.register.subtitle_join@@</p>
+  <form id="register-form" dir="ltr" autocomplete="on" novalidate>
+    <label for="reg-email">@@ui.shared.email_label@@</label>
+    <input id="reg-email" name="email" type="email" required autocomplete="username" dir="ltr" inputmode="email" spellcheck="false">
+    <p class="hint" data-hint-for="reg-email">@@ui.register.email_hint@@</p>
+
+    <label for="reg-password">@@ui.shared.password_label@@</label>
+    <input id="reg-password" name="password" type="password" required autocomplete="new-password" minlength="12" dir="ltr" spellcheck="false">
+    <p class="hint" data-hint-for="reg-password">@@ui.register.password_hint@@</p>
+
+    <div class="auth-honeypot" aria-hidden="true">
+      <label for="register-website">Website</label>
+      <input type="text" id="register-website" name="website" tabindex="-1" autocomplete="off" value="">
+    </div>
+
+    <button type="submit" id="register-submit" class="btn-cta">@@ui.register.submit@@</button>
+  </form>
+  <div class="auth-or-divider" id="register-oidc-divider" hidden>
+    <span class="auth-or-divider__line" aria-hidden="true"></span>
+    <span class="auth-or-divider__text">@@auth.or_continue_with@@</span>
+    <span class="auth-or-divider__line" aria-hidden="true"></span>
+  </div>
+  <button type="button" class="btn-google-sign-in" id="register-google-btn" hidden>
+    <span class="btn-google-sign-in__icon" aria-hidden="true">
+      <img src="/static/icons/google-g.svg" alt="" width="20" height="20" decoding="async">
+    </span>
+    <span class="btn-google-sign-in__label">@@auth.sign_up_with_google@@</span>
+  </button>
+  <p class="sub auth-register-agreement">
+    @@ui.register.agreement_lead@@
+    <a class="auth-inline-legal-link" href="/login?legal=terms">@@ui.legal.terms_link_label@@</a>@@ui.register.agreement_and@@<a class="auth-inline-legal-link" href="/login?legal=constitution">@@ui.legal.constitution_title@@</a>.
+  </p>
+  <p class="err" id="register-msg" role="alert"></p>
+  <p class="auth-flow-back">
+    <button type="button" class="auth-text-btn" id="auth-back-from-register">@@ui.login.back_to_start@@</button>
+  </p>
+</section>

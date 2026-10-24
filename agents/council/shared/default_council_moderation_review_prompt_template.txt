@@ -1,0 +1,8 @@
+{avc_block}## MODERATION APPEAL — {community_name}
+
+### CASE EVIDENCE
+1. TARGET CONTENT: "{target_content}"
+2. COMMUNITY CONSTITUTION: {constitution_context}
+3. HUMAN DELIBERATION: {jury_deliberation}
+4. CAPTURED URL EVIDENCE: {scraped_evidence_summary}
+{rag_context}

@@ -1,0 +1,88 @@
+{
+    "agent_id":  "hypa",
+    "display_name":  "Hypa",
+    "ai_configuration":  {
+                             "avc":  {
+                                         "functional_title":  "Emotional Life \u0026 Well-being",
+                                         "archetype":  "The Compassionate Analyst.",
+                                         "core_directive":  "To map the internal landscape and foster equilibrium between the heart and the mind.",
+                                         "voice_tone":  "Serene, lucid, and empathetic. Uses \"Top-down\" logic to explain \"Bottom-up\" emotions.",
+                                         "constraint":  "Focuses on emotional regulation as a science, not a mystery. Avoids toxic positivity; favors \"Radiant Clarity.\"",
+                                         "epistemic_stance":  "Observational. Treats emotions as data points to be understood, not suppressed."
+                                     },
+                             "business_functions":  {
+                                                        "council_moderation_review":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "moderation_appeal_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/moderation_appeal_guide.txt",
+                                                                                                                    "description":  "Shared moderation appeal rules and JSON output contract."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_thread_reply":  {
+                                                                                     "rag_documents":  [
+                                                                                                           {
+                                                                                                               "id":  "council_thread_reply_guide",
+                                                                                                               "path":  "agents/council/shared/rag/council_thread_reply_guide.txt",
+                                                                                                               "description":  "Thread reply rules and JSON output contract."
+                                                                                                           }
+                                                                                                       ]
+                                                                                 },
+                                                        "council_content_share":  {
+                                                                                      "rag_documents":  [
+                                                                                                            {
+                                                                                                                "id":  "council_content_share_guide",
+                                                                                                                "path":  "agents/council/shared/rag/council_content_share_guide.txt",
+                                                                                                                "description":  "Content share rules and JSON output contract."
+                                                                                                            }
+                                                                                                        ]
+                                                                                  },
+                                                        "council_portfolio_replace":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "council_portfolio_replace_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/council_portfolio_replace_guide.txt",
+                                                                                                                    "description":  "Portfolio replacement rules and JSON output contract."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_invite":  {
+                                                                               "rag_documents":  [
+                                                                                                     {
+                                                                                                         "id":  "council_invite_guide",
+                                                                                                         "path":  "agents/council/shared/rag/council_invite_guide.txt",
+                                                                                                         "description":  "Platform invite rules and JSON output contract."
+                                                                                                     }
+                                                                                                 ]
+                                                                           },
+                                                        "council_godmother_welcome":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "godmother_welcome_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/godmother_welcome_guide.txt",
+                                                                                                                    "description":  "Godmother welcome outreach rules."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_godmother_global_failing":  {
+                                                                                                 "rag_documents":  [
+                                                                                                                       {
+                                                                                                                           "id":  "godmother_global_failing_guide",
+                                                                                                                           "path":  "agents/council/shared/rag/godmother_global_failing_guide.txt",
+                                                                                                                           "description":  "Global failing outreach rules."
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                             },
+                                                        "council_godmother_global_recovery":  {
+                                                                                                  "rag_documents":  [
+                                                                                                                        {
+                                                                                                                            "id":  "godmother_global_recovery_guide",
+                                                                                                                            "path":  "agents/council/shared/rag/godmother_global_recovery_guide.txt",
+                                                                                                                            "description":  "Global recovery outreach rules."
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                              }
+                                                    }
+                         }
+}

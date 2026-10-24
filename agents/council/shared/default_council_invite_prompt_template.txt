@@ -1,0 +1,14 @@
+{avc_block}## PLATFORM INVITE (compose)
+
+### STEWARD
+Handle: @{steward_handle}
+Label: {steward_label}
+Intention: {steward_intention}
+
+### VERIFIED RECIPIENT
+Email (do not change): {verified_email}
+Label: {intended_label}
+
+### ARTICLE CONTEXT
+{article_context}
+{rag_context}

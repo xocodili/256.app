@@ -1,0 +1,13 @@
+---
+description: AI token monetization design anchor
+alwaysApply: true
+---
+
+# Noms — primary monetization mechanism
+
+- Public-facing currency name is **Noms** (stored in `social_human.ai_tokens`).
+- Treat Noms as the primary monetization unit across product and UX decisions.
+- AI services (e.g. council-powered art generation) should consume AI tokens.
+- The home feed is **ad-free by design** — no third-party ad units in scroll.
+- Accrual: **signup grant** (`SIGNUP_NOM_GRANT`, 32 Noms), **daily login** (+1 Nom first sign-in each UTC day), **jury duty** (+3 Noms when a juror votes and the case resolves), plus optional **fiat top-up** — three Stripe packs in [`src/nom_packs.rs`](../src/nom_packs.rs): **Civic** 32 Noms / A$3 (always available subject to wallet cap), **Standard** 64 / A$5 (balance &lt; 64), **Steward** 128 / A$8 (balance &lt; 128); wallet cap 256. Entity founding debits per [`src/pricing.rs`](../src/pricing.rs) (community/profit 32, non-profit/gathering 16).
+- Keep this mechanism explicit in internal architecture/docs and intentionally simple in user-facing copy.

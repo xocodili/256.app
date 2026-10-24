@@ -1,0 +1,14 @@
+---
+description: Dunbar-scale 256 connection cap for human entities only (implemented)
+alwaysApply: true
+---
+
+# Social graph — connection limits (humans only)
+
+When designing or implementing **`social_entity` relationships**, edges, feeds, or caps:
+
+- **Human** entities have a **256** cap on **distinct active connections** (enforced in `src/social/connections.rs` on relationship create and creator `member_of` edges).
+- Target cap aligns with **Dunbar-scale** limits and realistic cognitive load—not an unbounded graph.
+- **Digital** actors and non-human entity types are **not** connection-capped; only humans need this limit.
+
+Also documented in `AGENTS.md` (same section title).

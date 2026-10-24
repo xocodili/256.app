@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">  __SITE_FAVICON__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>__JUD_POST_CASE_TITLE__</title>
+  <link rel="stylesheet" href="/static/css/brand.css">
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell" data-needs-profile="0" data-self-private-handle="__HOME_SELF_PRIVATE_HANDLE__" data-connection-count="__HOME_CONNECTION_COUNT__">
+    __SECURED_TOPBAR__
+    __HOME_RAIL_HTML__
+    <div class="__HOME_APP_STAGE_CLASS__">
+      <main class="app-main" id="app-main">
+        <div id="app-home-feed-panel" class="app-cards judicial-post-case-panel">
+          __JUD_POST_CASE_POST_CARD__
+          __JUD_POST_CASE_FORM_CARD__
+        </div>
+      </main>
+    </div>
+  </div>
+  __SECURED_PUBLIC_FOOTER__
+  <script type="application/json" id="home-shell-i18n">__HOME_SHELL_I18N_JSON__</script>
+  <script type="application/json" id="judicial-crisis-bundle">__JUDICIAL_CRISIS_BUNDLE_JSON__</script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+  <script>
+    (function () {
+      var bundleEl = document.getElementById("judicial-crisis-bundle");
+      var crisisRoot = document.getElementById("judicial-crisis-panel-root");
+      var crisisBundle = null;
+      if (bundleEl) {
+        try {
+          crisisBundle = JSON.parse(bundleEl.textContent);
+        } catch (_b) {}
+      }
+      function mergeCrisisActions(pointKeys) {
+        if (!crisisBundle) return [];
+        var seen = {};
+        var out = [];
+        function pushList(list) {
+          if (!list) return;
+          list.forEach(function (a) {
+            if (!a || !a.id || seen[a.id]) return;
+            seen[a.id] = true;
+            out.push(a);
+          });
+        }
+        pointKeys.forEach(function (k) {
+          pushList(crisisBundle.by_point && crisisBundle.by_point[String(k)]);
+        });
+        pushList(crisisBundle.platform);
+        return out;
+      }
+      function renderCrisisPanel(pointKeys) {
+        if (!crisisRoot || !crisisBundle) return;
+        var actions = mergeCrisisActions(pointKeys);
+        var title = crisisBundle.title || "";
+        var html =
+          '<div class="crisis-resources-panel" role="complementary" aria-label="' +
+          title.replace(/"/g, "&quot;") +
+          '"><p class="crisis-resources-panel-title">' +
+          title +
+          "</p>";
+        if (crisisBundle.notice16) {
+          html +=
+            '<p class="crisis-resources-panel-notice">' + crisisBundle.notice16 + "</p>";
+        }
+        if (!actions.length) {
+          html +=
+            '<p class="crisis-resources-panel-fallback">' +
+            (crisisBundle.fallback || "") +
+            "</p>";
+        } else {
+          html += '<ul class="crisis-resources-panel-list">';
+          actions.forEach(function (a) {
+            html +=
+              '<li><a href="' +
+              a.tel_href +
+              '" rel="noopener noreferrer">' +
+              a.label +
+              ' <span class="mono">(' +
+              a.digits_display +
+              ")</span></a></li>";
+          });
+          html += "</ul>";
+        }
+        html += "</div>";
+        crisisRoot.innerHTML = html;
+      }
+      function selectedClausePoints(form) {
+        var points = [];
+        form.querySelectorAll('input[type="checkbox"][data-clause-point]:checked').forEach(function (cb) {
+          var p = cb.getAttribute("data-clause-point");
+          if (p) points.push(p);
+        });
+        return points;
+      }
+      function updateCrisisPanel(form) {
+        var points = selectedClausePoints(form);
+        renderCrisisPanel(points.length ? points : []);
+      }
+      var form = document.getElementById("judicial-case-request-form");
+      if (!form) return;
+      updateCrisisPanel(form);
+      form.querySelectorAll('input[type="checkbox"][data-clause-point]').forEach(function (cb) {
+        cb.addEventListener("change", function () {
+          updateCrisisPanel(form);
+        });
+      });
+      var editor = document.getElementById("judicial-case-rationale-editor");
+      var sink = document.getElementById("judicial-case-rationale-input");
+      var err = document.getElementById("judicial-case-rationale-error");
+      var clauseErr = document.getElementById("judicial-clause-error");
+      var clauseSink = document.getElementById("judicial-violated-clause-ids-input");
+      function plainFromHtml(html) {
+        var tmp = document.createElement("div");
+        tmp.innerHTML = String(html || "");
+        return (tmp.textContent || tmp.innerText || "").trim();
+      }
+      form.querySelectorAll("[data-editor-cmd]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var cmd = btn.getAttribute("data-editor-cmd");
+          if (!cmd) return;
+          editor && editor.focus();
+          document.execCommand(cmd, false, null);
+        });
+      });
+      form.addEventListener("submit", function (e) {
+        var ids = [];
+        form.querySelectorAll('input[type="checkbox"][data-clause-id]').forEach(function (cb) {
+          if (cb.checked) {
+            var cid = cb.getAttribute("data-clause-id");
+            if (cid) ids.push(cid);
+          }
+        });
+        if (clauseSink) clauseSink.value = ids.join(",");
+        if (!ids.length) {
+          e.preventDefault();
+          if (clauseErr) {
+            clauseErr.hidden = false;
+            clauseErr.removeAttribute("hidden");
+            try {
+              clauseErr.scrollIntoView({ block: "nearest", behavior: "smooth" });
+            } catch (_c) {}
+          }
+          return;
+        }
+        if (clauseErr) {
+          clauseErr.hidden = true;
+          clauseErr.setAttribute("hidden", "hidden");
+        }
+        if (!editor || !sink) return;
+        try {
+          if (document.activeElement === editor) {
+            editor.blur();
+          }
+        } catch (_x) {}
+        var html = editor.innerHTML || "";
+        var plainText =
+          String(editor.innerText != null ? editor.innerText : "")
+            .replace(/\u00a0/g, " ")
+            .trim() || plainFromHtml(html);
+        if (!plainText) {
+          e.preventDefault();
+          if (err) {
+            err.hidden = false;
+            err.removeAttribute("hidden");
+            try {
+              err.scrollIntoView({ block: "nearest", behavior: "smooth" });
+            } catch (_s) {}
+          }
+          return;
+        }
+        var i18nEl = document.getElementById("home-shell-i18n");
+        var UI = {};
+        if (i18nEl) {
+          try {
+            UI = JSON.parse(i18nEl.textContent);
+          } catch (_ui) {}
+        }
+        var emergencySelected = false;
+        form.querySelectorAll('label[data-emergency-clause="1"] input[type="checkbox"]').forEach(function (cb) {
+          if (cb.checked) emergencySelected = true;
+        });
+        if (emergencySelected) {
+          var confirmMsg = UI.emergency_confirm || "Emergency safety filing hides this post from everyone. Continue?";
+          if (!window.confirm(confirmMsg)) {
+            e.preventDefault();
+            return;
+          }
+        }
+        if (err) {
+          err.hidden = true;
+          err.setAttribute("hidden", "hidden");
+        }
+        sink.value = html;
+      });
+    })();
+  </script>
+</body>
+</html>

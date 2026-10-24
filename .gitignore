@@ -1,0 +1,23 @@
+/target
+/target_run
+/target_alt
+.env
+*.pem
+*.pdb
+*.key
+.DS_Store
+.secrets/
+static/generated/user-faces/
+target-run
+target-test
+e2e/node_modules/
+e2e/test-results/
+e2e/playwright-report/
+e2e/blob-report/
+e2e/fixtures/manifest.json
+target-deploy-test
+
+# local run artefacts
+*.log
+cookies.txt
+tmp/

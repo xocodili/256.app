@@ -1,0 +1,22 @@
+Brand logo validate — safety and identity gate (brand_logo_validate)
+
+One image is attached — a candidate organization logo from the entity's website domain.
+
+Decide whether it is acceptable to display as a public organization logo.
+
+REJECT (valid=false) when:
+- Primarily sexual, violent, or hate-symbol imagery
+- Not a logo, wordmark, icon, or brand mark (person photo, meme, scenery, document scan)
+- Mostly unreadable clutter with no clear brand identity at logo scale
+- Placeholder/error tile
+
+ACCEPT (valid=true) when:
+- Reads as organization logo, wordmark, icon, or reasonable brand mark
+- Safe for general audiences at small scale
+
+Output JSON only:
+{"valid": true}
+or
+{"valid": false, "reason_code": "not_logo"}
+
+reason_code: not_logo, unsafe_content, placeholder

@@ -1,0 +1,35 @@
+---
+description: Site-wide UI color palette usage guidance
+alwaysApply: true
+---
+
+# UI color palette usage
+
+Use this palette site-wide:
+
+- `--c-red`: arterial red
+- `--c-green`: forest green
+- `--c-blue`: royal blue
+- `--c-cyan`: sky blue
+- `--c-magenta`: burgundy
+- `--c-yellow`: sun-burst yellow
+
+Semantic usage guidance:
+
+- **Posts and content surfaces**: prioritize blues (`--c-blue`, `--c-cyan`).
+- **Call-to-actions**: prioritize yellows and reds (`--c-yellow`, `--c-red`).
+- **Action-oriented elements** (where a user is being prompted to do something): prioritize green (`--c-green`).
+- **Self-serving / promotional surfaces** (e.g. marketing cards, promo modules): prioritize burgundy (`--c-magenta`).
+
+Card top-border guidance:
+
+- Keep card top borders consolidated through shared card accent tokens/variables.
+- Set card top-border color by card purpose:
+  - action cards: green
+  - primary acquisition card (`Join In`): arterial red (highest visual urgency)
+  - promotional/marketing cards: burgundy
+  - content/profile cards: blues
+
+When updating UI styles, prefer changing shared tokens in `static/css/brand.css` rather than introducing new ad hoc accent colors.
+
+Iconography (sizes 48 / 32 / 16, system-icon yellow hover, council-informed strokes): see `docs/ICONOGRAPHY.md` and `.cursor/rules/ui-iconography.mdc`.

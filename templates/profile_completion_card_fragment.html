@@ -1,0 +1,47 @@
+<section class="card auth-card app-card app-profile-completion-card" data-home-card="profile-completion">
+  <div class="card-accent" role="presentation"></div>
+  <h1 class="profile-step-heading">@@ui.home_profile.heading@@</h1>
+  <form id="profile-completion-form" class="profile-completion-form" autocomplete="on" novalidate>
+    <button type="submit" class="profile-form-implicit-submit" tabindex="-1" aria-hidden="true"></button>
+    <label class="profile-field-label profile-field-label--required" for="profile-handle">
+      <span class="profile-field-label__text">@@ui.home_profile.handle_label@@</span>
+      <abbr class="profile-req-mark" title="@@ui.home_profile.required_abbr@@">*</abbr>
+    </label>
+    <input id="profile-handle" name="handle" type="text" required autocomplete="username" minlength="3" maxlength="32">
+
+    <label class="profile-field-label profile-field-label--required" for="profile-given">
+      <span class="profile-field-label__text">@@ui.home_profile.given_label@@</span>
+      <abbr class="profile-req-mark" title="@@ui.home_profile.required_abbr@@">*</abbr>
+    </label>
+    <input id="profile-given" name="given_name" type="text" required autocomplete="given-name" maxlength="128">
+
+    <label class="profile-field-label profile-field-label--required" for="profile-family">
+      <span class="profile-field-label__text">@@ui.home_profile.family_label@@</span>
+      <abbr class="profile-req-mark" title="@@ui.home_profile.required_abbr@@">*</abbr>
+    </label>
+    <input id="profile-family" name="family_name" type="text" required autocomplete="family-name" maxlength="128">
+
+    <label class="profile-field-label profile-field-label--required" for="profile-birth-date">
+      <span class="profile-field-label__text">@@ui.home_profile.birth_date_label@@</span>
+      <abbr class="profile-req-mark" title="@@ui.home_profile.required_abbr@@">*</abbr>
+    </label>
+    <input id="profile-birth-date" name="birth_date" type="date" required autocomplete="bday" max="__PROFILE_BIRTH_DATE_MAX__">
+    <p class="hint" data-hint-for="profile-birth-date">@@ui.home_profile.birth_date_hint@@</p>
+
+    <label class="profile-field-label profile-field-label--required" for="profile-country">
+      <span class="profile-field-label__text">@@ui.home_profile.country_label@@</span>
+      <abbr class="profile-req-mark" title="@@ui.home_profile.required_abbr@@">*</abbr>
+    </label>
+    <select id="profile-country" name="country_code" required autocomplete="country">
+      <option value="" disabled selected>@@ui.home_profile.country_select_prompt@@</option>
+      __PROFILE_COUNTRY_OPTION_ROWS__
+    </select>
+    <p class="hint" id="profile-country-hint-default" data-hint-for="profile-country">@@ui.home_profile.country_hint@@</p>
+    <p class="hint" id="profile-country-detected-note" hidden>@@ui.home_profile.country_detected_note@@</p>
+
+    <div class="auth-choice-buttons" role="group" aria-label="@@ui.home_profile.next_aria_group@@">
+      <button type="button" id="profile-completion-next" class="auth-choice-btn btn-cta">@@ui.home_profile.next@@</button>
+    </div>
+  </form>
+  <p class="err" id="profile-completion-msg" role="alert"></p>
+</section>

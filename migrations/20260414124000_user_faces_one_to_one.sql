@@ -1,0 +1,3 @@
+-- No-op (greenfield refactor).
+-- One-to-one uniqueness is defined directly in `20260414120000_user_faces.sql`
+-- via `UNIQUE KEY uq_user_faces_user_id (user_id)`.

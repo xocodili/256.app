@@ -1,0 +1,6 @@
+<line class="robot-antenna-stem" x1="128" y1="54" x2="128" y2="22"/>
+<circle class="robot-antenna-tip" cx="128" cy="18" r="9"/>
+<rect class="smiley-face robot-head" x="44" y="58" width="168" height="168" rx="26" ry="26"/>
+<text class="eye eye-left robot-eye" x="86" y="126">0</text>
+<text class="eye eye-right robot-eye" x="158" y="126">0</text>
+<path class="mouth robot-mouth" d="M 74 172 C 88 158 104 186 118 172 C 132 158 148 186 162 172 C 176 158 192 186 206 172"/>

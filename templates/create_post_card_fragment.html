@@ -1,0 +1,88 @@
+<section class="card app-card card--action app-create-post-card" id="create-post-card">
+  <div class="card-accent" role="presentation"></div>
+  <header class="create-post-card-header">
+    <h1>@@ui.home.create_post_title@@</h1>
+    <div class="create-post-entity-picker" id="create-post-entity-picker">
+      <input type="hidden" id="create-post-entity" name="entity_id" value="" autocomplete="off" />
+      <button
+        type="button"
+        id="create-post-entity-trigger"
+        class="create-post-entity-trigger"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-label="@@ui.home.create_post_as_entity@@"
+      >
+        <span class="create-post-entity-trigger-label"></span>
+        <span class="create-post-entity-trigger-caret" aria-hidden="true">▾</span>
+      </button>
+      <ul
+        id="create-post-entity-menu"
+        class="create-post-entity-menu"
+        role="listbox"
+        hidden
+      ></ul>
+    </div>
+  </header>
+
+  <form id="create-post-form" class="create-post-form" novalidate>
+    <input type="hidden" id="create-post-domain-id" name="domain_id" value="" autocomplete="off" />
+    <input type="hidden" id="create-post-link-id" name="content_link_id" value="" autocomplete="off" />
+    <input
+      id="create-post-audience"
+      name="audience_handles"
+      class="create-post-to-input"
+      type="text"
+      value="For: @friends, @family, @colleagues, @private"
+      autocomplete="off"
+      spellcheck="false"
+      aria-label="Audience handles"
+    />
+    <p class="hint">@@ui.home.create_post_audience_hint@@</p>
+
+    <p
+      class="hint create-post-og-status"
+      id="create-post-og-status"
+      hidden
+      aria-live="polite"
+    ></p>
+    <div id="create-post-og-preview" class="create-post-og-preview" hidden></div>
+
+    <div class="create-post-editor-toolbar" role="toolbar" aria-label="Text formatting">
+      <button type="button" data-cmd="bold" class="create-post-editor-btn"><strong>B</strong></button>
+      <button type="button" data-cmd="italic" class="create-post-editor-btn"><em>I</em></button>
+      <button type="button" data-cmd="underline" class="create-post-editor-btn"><u>U</u></button>
+      <button type="button" data-cmd="indent" class="create-post-editor-btn">⇥</button>
+      <button type="button" data-cmd="outdent" class="create-post-editor-btn">⇤</button>
+      <button type="button" data-cmd="insertUnorderedList" class="create-post-editor-btn">•</button>
+      <button type="button" data-cmd="foreColor" data-value="#f6f6fa" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f6f6fa" aria-label="White text" title="White text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#f4c430" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#f4c430" aria-label="Yellow text" title="Yellow text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4169e1" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4169e1" aria-label="Blue text" title="Blue text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#4fc3f7" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#4fc3f7" aria-label="Cyan text" title="Cyan text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#1f6b3a" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#1f6b3a" aria-label="Green text" title="Green text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#a3232b" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#a3232b" aria-label="Red text" title="Red text"></button>
+      <button type="button" data-cmd="foreColor" data-value="#7b1e3d" class="create-post-editor-btn create-post-editor-color-btn" style="--swatch:#7b1e3d" aria-label="Magenta text" title="Magenta text"></button>
+    </div>
+    <div
+      id="create-post-editor"
+      class="create-post-editor"
+      contenteditable="true"
+      role="textbox"
+      aria-multiline="true"
+      aria-label="@@ui.home.create_post_text_placeholder@@"
+      data-placeholder="@@ui.home.create_post_text_placeholder@@"
+    ></div>
+    <p class="hint create-post-char-hint" id="create-post-char-hint" aria-live="polite"></p>
+
+    <p
+      class="hint create-post-submit-status"
+      id="create-post-submit-status"
+      hidden
+      aria-live="polite"
+    ></p>
+
+    <button type="submit" id="create-post-submit" class="btn-cta">@@ui.home.create_post_submit@@</button>
+    <p class="auth-flow-back">
+      <button type="button" id="create-post-back" class="auth-text-btn">@@ui.shared.back@@</button>
+    </p>
+  </form>
+</section>

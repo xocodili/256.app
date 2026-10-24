@@ -1,0 +1,8 @@
+{avc_block}## GODMOTHER GLOBAL FAILING
+
+### MEMBER
+Handle: @{human_handle}
+
+### CIVIC STANDING URL
+{civic_standing_url}
+{rag_context}

@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "default_locale": "en",
+  "points": {
+    "401": {
+      "charter_point": 401,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_gb",
+          "type": "voice",
+          "digits": "999",
+          "regions": ["GB", "UK"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_au",
+          "type": "voice",
+          "digits": "000",
+          "regions": ["AU"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_ca",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["CA"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "402": {
+      "charter_point": 402,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "403": {
+      "charter_point": 403,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "404": {
+      "charter_point": 404,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "405": {
+      "charter_point": 405,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "406": {
+      "charter_point": 406,
+      "severity": "crisis",
+      "actions": [
+        {
+          "id": "suicide_lifeline_us",
+          "type": "voice",
+          "digits": "988",
+          "regions": ["US"],
+          "label_key": "crisis.action.suicide_lifeline"
+        },
+        {
+          "id": "samaritans_gb",
+          "type": "voice",
+          "digits": "116123",
+          "regions": ["GB", "UK"],
+          "label_key": "crisis.action.samaritans"
+        },
+        {
+          "id": "lifeline_au",
+          "type": "voice",
+          "digits": "131114",
+          "regions": ["AU"],
+          "label_key": "crisis.action.lifeline_au"
+        },
+        {
+          "id": "suicide_lifeline_ca",
+          "type": "voice",
+          "digits": "988",
+          "regions": ["CA"],
+          "label_key": "crisis.action.suicide_lifeline"
+        }
+      ]
+    },
+    "407": {
+      "charter_point": 407,
+      "severity": "emergency",
+      "actions": [
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        }
+      ]
+    },
+    "16": {
+      "charter_point": 16,
+      "severity": "informational",
+      "actions": [],
+      "notice_key": "crisis.notice.operator_reports_not_user"
+    },
+    "platform": {
+      "charter_point": null,
+      "severity": "crisis",
+      "actions": [
+        {
+          "id": "suicide_lifeline_us",
+          "type": "voice",
+          "digits": "988",
+          "regions": ["US"],
+          "label_key": "crisis.action.suicide_lifeline"
+        },
+        {
+          "id": "local_emergency_us",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["US"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_gb",
+          "type": "voice",
+          "digits": "999",
+          "regions": ["GB", "UK"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_au",
+          "type": "voice",
+          "digits": "000",
+          "regions": ["AU"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "local_emergency_ca",
+          "type": "voice",
+          "digits": "911",
+          "regions": ["CA"],
+          "label_key": "crisis.action.local_emergency"
+        },
+        {
+          "id": "eu_emergency",
+          "type": "voice",
+          "digits": "112",
+          "regions": ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "EU"],
+          "label_key": "crisis.action.eu_emergency"
+        },
+        {
+          "id": "samaritans_gb",
+          "type": "voice",
+          "digits": "116123",
+          "regions": ["GB", "UK"],
+          "label_key": "crisis.action.samaritans"
+        },
+        {
+          "id": "lifeline_au",
+          "type": "voice",
+          "digits": "131114",
+          "regions": ["AU"],
+          "label_key": "crisis.action.lifeline_au"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2 @@
+-- No-op (greenfield refactor).
+-- `generated_artwork_path` is defined directly in `20260414120000_user_faces.sql`.

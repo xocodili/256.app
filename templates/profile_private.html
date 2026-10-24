@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">  __SITE_FAVICON__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  __CSRF_META__
+  <title>__PRIVATE_DOCUMENT_TITLE__</title>
+  <link rel="stylesheet" href="/static/css/brand.css?v=20260814-place-id-logout">
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell" data-needs-profile="0" data-needs-consent="0" data-face-capture-ready="1" data-self-private-handle="__HOME_SELF_PRIVATE_HANDLE__" data-connection-count="__HOME_CONNECTION_COUNT__">
+    __SECURED_TOPBAR__
+    __HOME_RAIL_HTML__
+    <div class="__HOME_APP_STAGE_CLASS__">
+      <main class="app-main" id="app-main">
+        <div id="app-home-profile-panel" class="app-home-profile-panel" hidden>
+          <div id="app-home-profile-step1">
+            <div id="app-home-profile-loading" class="card auth-card app-card app-home-profile-loading-card">
+              <div class="card-accent" role="presentation"></div>
+              __CARD_LOADER_PROFILE__
+              <p class="sub app-home-profile-loading-err" id="app-home-profile-loading-msg" hidden role="alert"></p>
+            </div>
+            <div id="app-home-profile-mount" class="app-home-profile-mount"></div>
+          </div>
+        </div>
+        <div id="app-home-create-panel" class="app-home-profile-panel" hidden>
+          <div id="app-home-create-loading" class="card auth-card app-card app-home-profile-loading-card">
+            <div class="card-accent" role="presentation"></div>
+            __CARD_LOADER_CREATE__
+            <p class="sub app-home-profile-loading-err" id="app-home-create-loading-msg" hidden role="alert"></p>
+          </div>
+          <div id="app-home-create-mount" class="app-home-profile-mount"></div>
+        </div>
+        <div id="app-home-feed-panel" class="app-cards">
+          __PRIVATE_PROFILE_CARD__
+        </div>
+        <template id="app-home-feed-default-template">__HOME_FEED_DEFAULT__</template>
+      </main>
+    </div>
+  </div>
+  __SECURED_PUBLIC_FOOTER__
+  <script type="application/json" id="home-shell-i18n">__HOME_SHELL_I18N_JSON__</script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+  <script src="/static/js/brand-card-loader.js" defer></script>
+  <script src="/static/js/og-preview-client.js" defer></script>
+  <script src="/static/js/handle-input.js" defer></script>
+  <script src="/static/js/handle-typeahead.js?v=20260611-mentions" defer></script>
+  <script src="/static/js/avatar-html.js?v=20260611-search-avatar" defer></script>
+  <script src="/static/js/entity-recommendations.js?v=20260611-search-avatar" defer></script>
+  <script src="/static/js/create-entity-form-common.js" defer></script>
+  <script src="/static/js/profile-account.js" defer></script>
+  <script src="/static/js/profile-card.js?v=20260814-place-id-logout" defer></script>
+  <script src="/static/js/post-engagement.js?v=20260723-preview" defer></script>
+  <script src="/static/js/home-shell.js?v=20260813-profile-refresh" defer></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+---
+description: Restart local dev servers after changes that invalidate the running build
+alwaysApply: true
+---
+
+# Dev server restart (256.app)
+
+After making changes that **invalidate the currently running `cargo` dev build** (Rust source, `Cargo.toml`, or static assets the server serves from disk where behavior depends on a fresh process), **restart the local apps** so the user is not testing stale binaries or behavior. **Do not only tell the user to restart**—stop the listener(s) if needed and start `cargo run` / `ai_gateway` again in the same session when you have shell access.
+
+1. **Main web app**: `cargo run` (listens on **`127.0.0.1:8080`**; binary `target\debug\app.exe` on Windows).
+2. **`ai_gateway`**: `cargo run --bin ai_gateway` (**`127.0.0.1:50051`**).
+
+**Typical flow**: stop existing listeners on those ports (e.g. `taskkill` by PID from `netstat`, or `taskkill /F /IM app.exe` / `ai_gateway.exe` if appropriate), then start both again in the background from the repo root.
+
+If **Windows Application Control** blocks `target\debug\*.exe` in this environment (os error 4551), say so and have the user run **`cargo run`** in their own terminal.
+
+Pure **CSS** or **static file** edits may not require a Rust rebuild, but **restart the main app** if unsure or if templates are embedded at compile time.

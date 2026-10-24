@@ -1,0 +1,156 @@
+# Reusable integration + public Playwright gate (called from ci.yml and deploy.yml).
+name: Test
+
+on:
+  workflow_call:
+
+env:
+  MYSQL_ROOT_PASSWORD: ci
+  TEST_DATABASE_URL: mysql://root:ci@127.0.0.1:3306
+  DATABASE_URL: mysql://root:ci@127.0.0.1:3306/twofivesix
+  # Bump when cache shape changes — invalidates bloated runner caches.
+  RUST_CACHE_KEY: 256-v2
+
+jobs:
+  rust-test:
+    runs-on: ubuntu-22.04
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci
+          MYSQL_DATABASE: twofivesix
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -pci"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free runner disk space
+        run: bash scripts/ci/free_runner_disk.sh
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ${{ env.RUST_CACHE_KEY }}
+          save-if: false
+      - name: Wait for MySQL
+        run: |
+          for i in $(seq 1 30); do
+            if (echo > /dev/tcp/127.0.0.1/3306) >/dev/null 2>&1; then
+              sleep 5
+              echo "MySQL ready"
+              exit 0
+            fi
+            echo "waiting for MySQL ($i/30)..."
+            sleep 2
+          done
+          exit 1
+      - name: Run integration tests
+        run: cargo test -- --test-threads=2
+      - name: Reclaim disk (integration test binaries are not cached)
+        if: always()
+        run: |
+          cargo clean
+          df -h /
+
+  playwright-public:
+    runs-on: ubuntu-22.04
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ci
+          MYSQL_DATABASE: twofivesix
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -pci"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free runner disk space
+        run: bash scripts/ci/free_runner_disk.sh
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ${{ env.RUST_CACHE_KEY }}
+          save-if: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+      - name: Wait for MySQL
+        run: |
+          for i in $(seq 1 30); do
+            if (echo > /dev/tcp/127.0.0.1/3306) >/dev/null 2>&1; then
+              sleep 5
+              echo "MySQL ready"
+              exit 0
+            fi
+            echo "waiting for MySQL ($i/30)..."
+            sleep 2
+          done
+          exit 1
+      - name: Prepare MySQL database
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq default-mysql-client
+          mysql -h 127.0.0.1 -P 3306 -uroot -pci <<'SQL'
+          DROP DATABASE IF EXISTS twofivesix;
+          CREATE DATABASE twofivesix CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+          SQL
+      - name: Build app and e2e seed binary
+        run: cargo build --bin app --bin e2e_seed
+      - name: Install Playwright
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Seed E2E personas
+        run: cargo run --bin e2e_seed -- --reset --manifest e2e/fixtures/manifest.json
+      - name: Start app
+        env:
+          DEV_AUTH_BYPASS: "1"
+          FACE_VISION_MOCK: "1"
+          SCHEDULER_TICK_SECS: "0"
+          HOST: 127.0.0.1
+          PORT: "8080"
+        run: |
+          nohup target/debug/app > /tmp/app.log 2>&1 &
+          echo $! > /tmp/app.pid
+          for i in $(seq 1 60); do
+            if curl -sf http://127.0.0.1:8080/health/status >/dev/null; then
+              echo "app ready"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "=== app failed to start ==="
+          cat /tmp/app.log || true
+          exit 1
+      - name: Public UI sweep
+        working-directory: e2e
+        env:
+          BASE_URL: http://127.0.0.1:8080
+        run: npm run test:public
+      - name: Reclaim disk (Playwright job does not upload Rust cache)
+        if: always()
+        run: |
+          cargo clean
+          df -h /
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diagnostics
+          path: |
+            /tmp/app.log
+            e2e/playwright-report/
+            e2e/test-results/
+          if-no-files-found: ignore

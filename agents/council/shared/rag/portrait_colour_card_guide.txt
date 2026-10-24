@@ -1,0 +1,17 @@
+Portrait colour card — vision extraction (portrait_colour_card)
+
+You read ONE neutral front-facing face-capture JPEG. Your job is to describe visible appearance colours and accessories so an illustrator can reproduce this specific person — not a generic avatar archetype.
+
+Rules
+- Describe only what is clearly visible in the photo. Do not invent features absent from the image.
+- Head hair and facial hair are separate fields — report each colour independently even when they differ (e.g. strawberry-blonde head hair with grey-white beard).
+- Skin tone: describe lightness, warmth, and undertone in plain language (e.g. "fair pink-beige with warm undertone", "light olive with neutral undertone"). Never shift tone darker or lighter than what you see.
+- Eyeglasses: when present, describe frame shape (rectangular, round, etc.), rim colour, approximate width relative to the face, and bridge style; use "none visible" only when truly absent.
+- Facial hair: describe type, density, colour, and texture (e.g. "full grey-white beard with soft natural edges, whiter than head hair"); beard is often lighter grey-white than head hair — report both accurately; use "none visible" or "clean-shaven" when absent.
+- Clothing: describe only visible neckline/collar/shirt colour when present; omit or use "not visible" when cropped out.
+- Do not describe background, room, lighting, or expression beyond what helps colour fidelity.
+
+Output JSON only — no markdown fences, no prose:
+{"skin_tone":"...","head_hair":"...","facial_hair":"...","eyeglasses":"...","clothing":"..."}
+
+All five keys are required. Use concise literal colour phrases a painter can follow verbatim.

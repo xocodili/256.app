@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">  __SITE_FAVICON__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>__JUD_COMMUNITY_REPARENT_TITLE__</title>
+  <link rel="stylesheet" href="/static/css/brand.css">
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell" data-needs-profile="0" data-self-private-handle="__HOME_SELF_PRIVATE_HANDLE__" data-connection-count="__HOME_CONNECTION_COUNT__">
+    __SECURED_TOPBAR__
+    __HOME_RAIL_HTML__
+    <div class="__HOME_APP_STAGE_CLASS__">
+      <main class="app-main" id="app-main">
+        <div id="app-home-feed-panel" class="app-cards judicial-post-case-panel">
+          __JUD_COMMUNITY_CONTEXT_CARD__
+          __JUD_COMMUNITY_REPARENT_FORM_CARD__
+        </div>
+      </main>
+    </div>
+  </div>
+  __SECURED_PUBLIC_FOOTER__
+  <script type="application/json" id="home-shell-i18n">__HOME_SHELL_I18N_JSON__</script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+  <script>
+    (function () {
+      var form = document.getElementById("judicial-community-reparent-form");
+      if (!form) return;
+      var rationaleEditor = document.getElementById("judicial-reparent-rationale-editor");
+      var rationaleSink = document.getElementById("judicial-reparent-rationale-input");
+      var rationaleErr = document.getElementById("judicial-reparent-rationale-error");
+      var toolbar = form.querySelector("[data-toolbar=rationale]");
+      if (toolbar && rationaleEditor) {
+        toolbar.querySelectorAll("[data-editor-cmd]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var cmd = btn.getAttribute("data-editor-cmd");
+            if (!cmd) return;
+            rationaleEditor.focus();
+            document.execCommand(cmd, false, null);
+          });
+        });
+      }
+      function plainFromHtml(html) {
+        var tmp = document.createElement("div");
+        tmp.innerHTML = String(html || "");
+        return (tmp.textContent || tmp.innerText || "").trim();
+      }
+      form.addEventListener("submit", function (e) {
+        if (rationaleSink && rationaleEditor) {
+          rationaleSink.value = rationaleEditor.innerHTML;
+        }
+        if (!plainFromHtml(rationaleEditor && rationaleEditor.innerHTML)) {
+          e.preventDefault();
+          if (rationaleErr) rationaleErr.hidden = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

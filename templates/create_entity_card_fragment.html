@@ -1,0 +1,62 @@
+<section
+  class="card app-card card--action app-create-entity-card entity-profile-accent--__ENTITY_ACCENT_KEY__"
+  id="create-entity-card"
+  data-entity-type-key="__ENTITY_TYPE_KEY_ESC__"
+>
+  <div class="card-accent" role="presentation"></div>
+  <header class="create-post-card-header">
+    <h1>__CREATE_ENTITY_TITLE__</h1>
+  </header>
+
+  <form id="create-entity-form" class="create-entity-form" novalidate>
+    <input type="hidden" id="create-entity-type-id" name="type_id" value="__TYPE_ID__" />
+    <input type="hidden" id="create-entity-location-id" name="location_id" value="__LOCATION_ID__" />
+    <p
+      id="create-entity-location-warning"
+      class="hint create-post-submit-status--error"
+      role="alert"
+      hidden
+    >
+      @@ui.home.create_entity_location_required@@
+    </p>
+    <div class="create-entity-logo-field">
+      <label for="create-entity-logo-url" class="create-entity-handle-label">@@ui.home.create_entity_logo_url_label@@</label>
+      <input
+        id="create-entity-logo-url"
+        name="logo_url"
+        class="search-add-input"
+        type="url"
+        inputmode="url"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="@@ui.home.create_entity_logo_url_placeholder@@"
+      />
+      <p class="hint">@@ui.home.create_entity_logo_url_hint@@</p>
+    </div>
+
+    <label for="create-entity-handle" class="create-entity-handle-label">@@ui.home.create_entity_handle_label@@</label>
+    <input
+      id="create-entity-handle"
+      name="handle"
+      class="search-add-input"
+      type="text"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="@handle"
+      minlength="3"
+      maxlength="32"
+      required
+      aria-required="true"
+    />
+    <p
+      class="hint create-post-submit-status"
+      id="create-entity-status"
+      hidden
+      aria-live="polite"
+    ></p>
+    <button type="submit" id="create-entity-submit" class="btn-cta">@@ui.home.search_add_card_create_cta@@</button>
+    <p class="auth-flow-back">
+      <button type="button" id="create-entity-back" class="auth-text-btn">@@ui.shared.back@@</button>
+    </p>
+  </form>
+</section>

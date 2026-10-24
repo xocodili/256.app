@@ -1,0 +1,13 @@
+---
+description: Mobile-first layout, touch targets, safe areas for 256.app UI
+alwaysApply: true
+---
+
+# Mobile-first UI
+
+- **Default styles target phones**; add behavior with **`min-width` media queries** only (avoid desktop-first `max-width` for core layout).
+- Use **`env(safe-area-inset-*)`** on full-bleed layouts; **`viewport-fit=cover`** in HTML viewport meta where brand pages ship.
+- **Touch targets** ~**44px** minimum for primary actions; **`font-size` ≥ 16px** on form fields to reduce iOS zoom-on-focus.
+- **`static/js/binary-bg.js`** lowers particle density on **narrow widths** (~&lt;480px / &lt;720px); keep that pattern when changing the effect.
+
+See `AGENTS.md` (UI: mobile-first) for the same intent.

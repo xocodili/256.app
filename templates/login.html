@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  __SITE_FAVICON__
+  __SITE_SEO__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>@@ui.login.intro_title_page@@</title>
+  <link rel="stylesheet" href="/static/css/brand.css?v=20260613-pantheon-muted">
+  __RECAPTCHA_SCRIPT__
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell app-shell--guest">
+    __PUBLIC_TOPBAR__
+    __GUEST_MARKETING_SPRITE__
+    <div class="guest-auth-solo" id="guest-split-auth">
+      <section class="guest-auth-solo__stage">
+      <section class="card auth-card guest-join-card guest-welcome-card card--action" id="auth-panel-join">
+        <div class="card-accent" role="presentation"></div>
+        <h1 class="guest-welcome-heading">@@ui.login.welcome_headline@@</h1>
+        <p class="sub guest-welcome-sub">@@ui.login.welcome_subline@@</p>
+        <button type="button" class="auth-text-btn join-login-btn" id="auth-btn-login">@@ui.login.choice_log_in@@</button>
+        <button type="button" class="auth-choice-btn btn-cta join-cta-btn" id="auth-btn-join">@@ui.login.choice_create_account@@</button>
+        <p class="sub guest-welcome-trust">@@ui.login.welcome_trust@@</p>
+      </section>
+
+      <div id="auth-panel-login" class="card auth-card guest-login-card card--action" hidden>
+        <div class="card-accent" role="presentation"></div>
+        <h1>@@ui.login.heading@@</h1>
+        <p class="sub">@@ui.login.subtitle@@</p>
+        <p class="success" id="flash" hidden></p>
+        <form id="login-form" dir="ltr" autocomplete="on" novalidate>
+          <label for="email">@@ui.shared.email_label@@</label>
+          <input id="email" name="email" type="email" required autocomplete="username" dir="ltr" inputmode="email" spellcheck="false">
+          <p class="hint" data-hint-for="email">@@ui.login.email_hint@@</p>
+
+          <label for="password">@@ui.shared.password_label@@</label>
+          <input id="password" name="password" type="password" required minlength="12" autocomplete="current-password" dir="ltr" spellcheck="false">
+          <p class="hint" data-hint-for="password">@@ui.login.password_hint@@</p>
+
+          <button type="submit" id="submit" class="btn-cta">@@ui.login.submit@@</button>
+        </form>
+        <div class="auth-or-divider" id="login-oidc-divider" hidden>
+          <span class="auth-or-divider__line" aria-hidden="true"></span>
+          <span class="auth-or-divider__text">@@auth.or_continue_with@@</span>
+          <span class="auth-or-divider__line" aria-hidden="true"></span>
+        </div>
+        <button type="button" class="btn-google-sign-in" id="login-google-btn" hidden>
+          <span class="btn-google-sign-in__icon" aria-hidden="true">
+            <img src="/static/icons/google-g.svg" alt="" width="20" height="20" decoding="async">
+          </span>
+          <span class="btn-google-sign-in__label">@@auth.sign_in_with_google@@</span>
+        </button>
+        <button type="button" id="submit-resend" class="auth-text-btn">@@ui.login.resend_from_login@@</button>
+        <button type="button" id="submit-forgot" class="auth-text-btn">@@ui.login.forgot_password@@</button>
+        <button type="button" id="submit-reactivate" class="auth-text-btn">@@ui.login.reactivate_account@@</button>
+        <p class="err" id="msg" role="alert"></p>
+        <p class="auth-flow-back">
+          <button type="button" class="auth-text-btn" id="auth-back-from-login">@@ui.login.back_to_start@@</button>
+        </p>
+      </div>
+
+      <div id="auth-panel-register" hidden>
+        <div id="auth-register-loading" class="card auth-card card--action">
+          <div class="card-accent" role="presentation"></div>
+          __CARD_LOADER_REGISTER__
+          <p class="sub auth-register-loading-text" id="auth-register-loading-msg" hidden role="alert"></p>
+        </div>
+        <div id="auth-register-mount"></div>
+      </div>
+
+      <div id="auth-panel-legal" hidden>
+        <div id="auth-legal-loading" class="card auth-card entity-public-card">
+          <div class="card-accent" role="presentation"></div>
+          __CARD_LOADER_LEGAL__
+          <p class="sub auth-register-loading-text" id="auth-legal-loading-msg" hidden role="alert"></p>
+        </div>
+        <div id="auth-legal-mount"></div>
+      </div>
+
+      <div id="auth-panel-forgot" hidden>
+        <div id="auth-forgot-loading" class="card auth-card card--action">
+          <div class="card-accent" role="presentation"></div>
+          __CARD_LOADER_FORGOT__
+          <p class="sub auth-register-loading-text" id="auth-forgot-loading-msg" hidden role="alert"></p>
+        </div>
+        <div id="auth-forgot-mount"></div>
+      </div>
+
+      <div id="auth-panel-reactivate" hidden>
+        <div id="auth-reactivate-loading" class="card auth-card card--action">
+          <div class="card-accent" role="presentation"></div>
+          __CARD_LOADER_REACTIVATE__
+          <p class="sub auth-register-loading-text" id="auth-reactivate-loading-msg" hidden role="alert"></p>
+        </div>
+        <div id="auth-reactivate-mount"></div>
+      </div>
+
+      __GUEST_WELCOME_MARKETING__
+
+      </section>
+    </div>
+  </div>
+  __PUBLIC_FOOTER__
+  <script src="/static/js/guest-shell-scroll.js" defer></script>
+  <script type="application/json" id="login-i18n">__LOGIN_PAGE_I18N_JSON__</script>
+  <script>
+    (function () {
+      var UI = JSON.parse(document.getElementById('login-i18n').textContent);
+      var joinCard = document.getElementById('auth-panel-join');
+      var guestWelcomeMarketing = document.getElementById('guest-welcome-marketing');
+      var loginPanel = document.getElementById('auth-panel-login');
+      var registerPanel = document.getElementById('auth-panel-register');
+      var topbarTitle = document.querySelector('.app-topbar .app-topbar-title');
+      var registerLoading = document.getElementById('auth-register-loading');
+      var registerMount = document.getElementById('auth-register-mount');
+      var registerLoadingMsg = document.getElementById('auth-register-loading-msg');
+      var legalPanel = document.getElementById('auth-panel-legal');
+      var forgotPanel = document.getElementById('auth-panel-forgot');
+      var forgotLoading = document.getElementById('auth-forgot-loading');
+      var forgotMount = document.getElementById('auth-forgot-mount');
+      var forgotLoadingMsg = document.getElementById('auth-forgot-loading-msg');
+      var reactivatePanel = document.getElementById('auth-panel-reactivate');
+      var reactivateLoading = document.getElementById('auth-reactivate-loading');
+      var reactivateMount = document.getElementById('auth-reactivate-mount');
+      var reactivateLoadingMsg = document.getElementById('auth-reactivate-loading-msg');
+      var legalLoading = document.getElementById('auth-legal-loading');
+      var legalMount = document.getElementById('auth-legal-mount');
+      var legalLoadingMsg = document.getElementById('auth-legal-loading-msg');
+      var guestAuthSolo = document.getElementById('guest-split-auth');
+      var registerCardUrl = '/login/register-card';
+      var legalCardUrl = '/login/legal-card';
+      var forgotCardUrl = '/login/forgot-card';
+      var reactivateCardUrl = '/login/reactivate-card';
+      var currentLegalDoc = 'terms';
+
+      function normalizeLegalDoc(doc) {
+        var d = String(doc || 'terms').trim().toLowerCase();
+        if (d === 'terms' || d === 'conditions') return 'terms';
+        if (d === 'privacy') return 'privacy';
+        if (d === 'safety' || d === 'crisis') return 'safety';
+        if (d === 'how' || d === 'how-it-works') return 'how';
+        if (d === 'constitution' || d === 'community-rules') return 'constitution';
+        return 'privacy';
+      }
+
+      function legalNavTitle(doc) {
+        var key = normalizeLegalDoc(doc);
+        var titles = UI.legal_nav_titles || {};
+        if (titles[key]) return titles[key];
+        return '256 - Legal';
+      }
+
+      function setLegalSiteTitle(doc) {
+        var title = legalNavTitle(doc);
+        if (topbarTitle) topbarTitle.textContent = title;
+        document.title = title;
+      }
+
+      var registerLoaded = false;
+      var registerLoadingFlag = false;
+      var RECAPTCHA_SITE_KEY = UI.recaptcha_site_key || '';
+      var OIDC_GOOGLE_ENABLED = !!UI.oidc_google_enabled;
+
+      function fetchRecaptchaToken(action) {
+        if (!RECAPTCHA_SITE_KEY) return Promise.resolve('');
+        if (typeof grecaptcha === 'undefined') {
+          return Promise.reject(new Error('recaptcha_not_loaded'));
+        }
+        return new Promise(function (resolve, reject) {
+          var timer = setTimeout(function () {
+            reject(new Error('recaptcha_timeout'));
+          }, 12000);
+          grecaptcha.ready(function () {
+            grecaptcha
+              .execute(RECAPTCHA_SITE_KEY, { action: action })
+              .then(function (token) {
+                clearTimeout(timer);
+                resolve(token);
+              })
+              .catch(function (err) {
+                clearTimeout(timer);
+                reject(err);
+              });
+          });
+        });
+      }
+
+      function startGoogleOidc(btn, msgEl, action) {
+        if (!btn || !OIDC_GOOGLE_ENABLED) return;
+        if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.execute !== 'function') {
+          if (msgEl) msgEl.textContent = UI.recaptcha_load_failed || UI.network_error_detail;
+        }
+        btn.hidden = false;
+        btn.removeAttribute('hidden');
+        var dividerId = btn.id === 'login-google-btn' ? 'login-oidc-divider' : 'register-oidc-divider';
+        var divider = document.getElementById(dividerId);
+        if (divider) {
+          divider.hidden = false;
+          divider.removeAttribute('hidden');
+        }
+        btn.addEventListener('click', async function () {
+          if (msgEl) msgEl.textContent = '';
+          btn.disabled = true;
+          try {
+            var captchaToken = await fetchRecaptchaToken(action);
+            var r = await fetch('/auth/oidc/google/start', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify({ captcha_token: captchaToken }),
+              credentials: 'same-origin'
+            });
+            var data = await r.json().catch(function () { return {}; });
+            if (r.ok && data.authorize_url) {
+              window.location.assign(data.authorize_url);
+              return;
+            }
+            if (msgEl) {
+              msgEl.textContent = data.error || UI.sign_in_failed_generic || UI.sign_in_failed;
+            }
+          } catch (err) {
+            if (msgEl) {
+              msgEl.textContent =
+                err && err.message === 'recaptcha_not_loaded'
+                  ? (UI.recaptcha_load_failed || UI.network_error_detail)
+                  : UI.network_error_detail;
+            }
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      var forgotLoaded = false;
+      var forgotLoadingFlag = false;
+      var reactivateLoaded = false;
+      var reactivateLoadingFlag = false;
+
+      function clearCardLoadError(el) {
+        if (!el) return;
+        el.textContent = '';
+        el.hidden = true;
+      }
+
+      function showCardLoadError(el, text) {
+        if (!el) return;
+        el.textContent = text;
+        el.hidden = false;
+      }
+
+      function resetGuestAuthScroll() {
+        if (guestAuthSolo) guestAuthSolo.scrollTop = 0;
+      }
+
+      function showPanel(which) {
+        if (joinCard) joinCard.hidden = which !== 'join';
+        if (guestWelcomeMarketing) guestWelcomeMarketing.hidden = which !== 'join';
+        loginPanel.hidden = which !== 'login';
+        registerPanel.hidden = which !== 'register';
+        legalPanel.hidden = which !== 'legal';
+        if (forgotPanel) forgotPanel.hidden = which !== 'forgot';
+        if (reactivatePanel) reactivatePanel.hidden = which !== 'reactivate';
+        if (which === 'legal') {
+          setLegalSiteTitle(currentLegalDoc);
+        } else if (topbarTitle) {
+          var titleByPanel = {
+            join: UI.nav_title_welcome || UI.nav_title_marketing,
+            login: UI.nav_title_auth,
+            register: UI.nav_title_auth,
+            forgot: UI.nav_title_auth,
+            reactivate: UI.nav_title_auth
+          };
+          var panelTitle = titleByPanel[which] || UI.nav_title_auth;
+          topbarTitle.textContent = panelTitle;
+          document.title = panelTitle;
+        }
+
+        if (which !== 'register') {
+          registerMount.innerHTML = '';
+          registerLoaded = false;
+          registerLoading.hidden = false;
+          clearCardLoadError(registerLoadingMsg);
+        }
+        if (which === 'register') {
+          registerMount.innerHTML = '';
+          registerLoaded = false;
+          registerLoading.hidden = false;
+          clearCardLoadError(registerLoadingMsg);
+        }
+        if (which !== 'legal') {
+          legalMount.innerHTML = '';
+          legalLoading.hidden = false;
+          clearCardLoadError(legalLoadingMsg);
+        }
+        if (which !== 'forgot' && forgotMount) {
+          forgotMount.innerHTML = '';
+          forgotLoaded = false;
+          if (forgotLoading) forgotLoading.hidden = false;
+          clearCardLoadError(forgotLoadingMsg);
+        }
+        if (which !== 'reactivate' && reactivateMount) {
+          reactivateMount.innerHTML = '';
+          reactivateLoaded = false;
+          if (reactivateLoading) reactivateLoading.hidden = false;
+          clearCardLoadError(reactivateLoadingMsg);
+        }
+        resetGuestAuthScroll();
+      }
+
+      showPanel('join');
+
+      function showLoginWithFlash() {
+        showPanel('login');
+      }
+
+      function fetchHtmlCard(url, loadingMsgEl, loadingCardEl, mountEl, failText, onLoaded) {
+        return fetch(url, { credentials: 'same-origin', headers: { Accept: 'text/html' } })
+          .then(function (r) {
+            if (r.status === 429) {
+              return r.json().then(function (d) {
+                showCardLoadError(loadingMsgEl, d.error || UI.card_rate_limited);
+                loadingCardEl.hidden = false;
+              });
+            }
+            if (!r.ok) {
+              showCardLoadError(loadingMsgEl, failText);
+              loadingCardEl.hidden = false;
+              return;
+            }
+            return r.text().then(function (html) {
+              mountEl.innerHTML = html;
+              clearCardLoadError(loadingMsgEl);
+              loadingCardEl.hidden = true;
+              onLoaded();
+            });
+          })
+          .catch(function () {
+            showCardLoadError(loadingMsgEl, failText);
+            loadingCardEl.hidden = false;
+          });
+      }
+
+      function loadRegisterCard() {
+        if (registerLoaded || registerLoadingFlag) return;
+        registerLoadingFlag = true;
+        registerLoading.hidden = false;
+        registerMount.innerHTML = '';
+        clearCardLoadError(registerLoadingMsg);
+        fetchHtmlCard(registerCardUrl, registerLoadingMsg, registerLoading, registerMount, UI.register_load_failed, function () {
+          registerLoaded = true;
+          bindRegisterForm();
+          var back = document.getElementById('auth-back-from-register');
+          if (back) {
+            back.addEventListener('click', function () {
+              showPanel('join');
+            });
+          }
+        }).finally(function () {
+          registerLoadingFlag = false;
+        });
+      }
+
+      function leaveLegalCard(openedInPlace) {
+        if (!openedInPlace && window.history.length > 1) {
+          history.back();
+          return;
+        }
+        if (UI.signed_in) {
+          window.location.href = '/home';
+          return;
+        }
+        showPanel('join');
+      }
+
+      function scrollLegalCardHash() {
+        var hash = window.location.hash;
+        if (!hash || hash.length < 2) return;
+        var target = document.querySelector(hash);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      function loadLegalCard(doc, openedInPlace) {
+        currentLegalDoc = normalizeLegalDoc(doc);
+        showPanel('legal');
+        setLegalSiteTitle(currentLegalDoc);
+        legalLoading.hidden = false;
+        legalMount.innerHTML = '';
+        clearCardLoadError(legalLoadingMsg);
+        fetchHtmlCard(
+          legalCardUrl + '?doc=' + encodeURIComponent(doc || 'terms'),
+          legalLoadingMsg,
+          legalLoading,
+          legalMount,
+          UI.legal_load_failed,
+          function () {
+            var back = document.getElementById('auth-back-from-legal');
+            if (back) {
+              back.addEventListener('click', function () {
+                leaveLegalCard(!!openedInPlace);
+              });
+            }
+            resetGuestAuthScroll();
+            scrollLegalCardHash();
+          }
+        );
+      }
+
+      function loadForgotCard() {
+        if (!forgotMount || forgotLoaded || forgotLoadingFlag) return;
+        forgotLoadingFlag = true;
+        forgotLoading.hidden = false;
+        forgotMount.innerHTML = '';
+        clearCardLoadError(forgotLoadingMsg);
+        fetchHtmlCard(forgotCardUrl, forgotLoadingMsg, forgotLoading, forgotMount, UI.forgot_load_failed, function () {
+          forgotLoaded = true;
+          bindForgotForm();
+          var back = document.getElementById('auth-back-from-forgot');
+          if (back) {
+            back.addEventListener('click', function () {
+              showPanel('login');
+            });
+          }
+        }).finally(function () {
+          forgotLoadingFlag = false;
+        });
+      }
+
+      function loadReactivateCard() {
+        if (!reactivateMount || reactivateLoaded || reactivateLoadingFlag) return;
+        reactivateLoadingFlag = true;
+        reactivateLoading.hidden = false;
+        reactivateMount.innerHTML = '';
+        clearCardLoadError(reactivateLoadingMsg);
+        fetchHtmlCard(reactivateCardUrl, reactivateLoadingMsg, reactivateLoading, reactivateMount, UI.reactivate_load_failed, function () {
+          reactivateLoaded = true;
+          bindReactivateForm();
+          var back = document.getElementById('auth-back-from-reactivate');
+          if (back) {
+            back.addEventListener('click', function () {
+              showPanel('login');
+            });
+          }
+        }).finally(function () {
+          reactivateLoadingFlag = false;
+        });
+      }
+
+      function bindReactivateForm() {
+        var form = document.getElementById('reactivate-form');
+        var msg = document.getElementById('reactivate-msg');
+        var btn = document.getElementById('reactivate-submit');
+        if (!form || !msg || !btn) return;
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          msg.textContent = '';
+          msg.style.color = '';
+          var emailEl = document.getElementById('reactivate-email');
+          var email = emailEl ? String(emailEl.value || '').trim() : '';
+          if (!email || !form.checkValidity()) {
+            msg.textContent = UI.request_failed;
+            return;
+          }
+          btn.disabled = true;
+          try {
+            var r = await fetch('/auth/reactivate-account', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ email: email }),
+              credentials: 'same-origin'
+            });
+            if (r.status === 202) {
+              msg.style.color = 'var(--muted)';
+              msg.textContent = UI.reactivate_maybe_sent;
+            } else {
+              var d = await r.json().catch(function () { return {}; });
+              msg.style.color = '';
+              msg.textContent = d.error || UI.request_failed;
+            }
+          } catch (_) {
+            msg.style.color = '';
+            msg.textContent = UI.network_error_short;
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      function bindForgotForm() {
+        var form = document.getElementById('forgot-form');
+        var msg = document.getElementById('forgot-msg');
+        var btn = document.getElementById('forgot-submit');
+        if (!form || !msg || !btn) return;
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          msg.textContent = '';
+          msg.style.color = '';
+          var emailEl = document.getElementById('forgot-email');
+          var email = emailEl ? String(emailEl.value || '').trim() : '';
+          if (!email || !form.checkValidity()) {
+            msg.textContent = UI.request_failed;
+            return;
+          }
+          btn.disabled = true;
+          try {
+            var r = await fetch('/auth/forgot-password', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ email: email }),
+              credentials: 'same-origin'
+            });
+            if (r.status === 202) {
+              msg.style.color = 'var(--muted)';
+              msg.textContent = UI.forgot_maybe_sent;
+            } else {
+              var d = await r.json().catch(function () { return {}; });
+              msg.style.color = '';
+              msg.textContent = d.error || UI.request_failed;
+            }
+          } catch (_) {
+            msg.style.color = '';
+            msg.textContent = UI.network_error_short;
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === '1') {
+        showLoginWithFlash();
+        var flash = document.getElementById('flash');
+        flash.textContent = UI.flash_registered;
+        flash.hidden = false;
+        params.delete('registered');
+        if (topbarTitle) topbarTitle.textContent = UI.nav_title_auth;
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('verified') === '1') {
+        showLoginWithFlash();
+        var flashV = document.getElementById('flash');
+        flashV.textContent = UI.flash_verified;
+        flashV.hidden = false;
+        params.delete('verified');
+        if (topbarTitle) topbarTitle.textContent = UI.nav_title_auth;
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('verify_error') === '1') {
+        showLoginWithFlash();
+        document.getElementById('msg').textContent = UI.flash_verify_error;
+        params.delete('verify_error');
+        if (topbarTitle) topbarTitle.textContent = UI.nav_title_auth;
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('reset_error') === '1') {
+        showLoginWithFlash();
+        document.getElementById('msg').textContent = UI.flash_reset_error;
+        params.delete('reset_error');
+        if (topbarTitle) topbarTitle.textContent = UI.nav_title_auth;
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('oidc_error') === '1') {
+        showLoginWithFlash();
+        document.getElementById('msg').textContent = UI.flash_oidc_error;
+        params.delete('oidc_error');
+        if (topbarTitle) topbarTitle.textContent = UI.nav_title_auth;
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('forgot') === '1') {
+        showPanel('forgot');
+        loadForgotCard();
+        params.delete('forgot');
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('reactivate') === '1') {
+        showPanel('reactivate');
+        loadReactivateCard();
+        params.delete('reactivate');
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('join') === '1') {
+        showPanel('register');
+        loadRegisterCard();
+        params.delete('join');
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('login') === '1') {
+        showPanel('login');
+        params.delete('login');
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('resend') === '1') {
+        showPanel('login');
+        params.delete('resend');
+        window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      } else if (params.get('legal')) {
+        var legalHash = window.location.hash || '';
+        loadLegalCard(params.get('legal'), false);
+        params.delete('legal');
+        window.history.replaceState(
+          {},
+          '',
+          window.location.pathname + (params.toString() ? '?' + params.toString() : '') + legalHash
+        );
+      }
+
+      document.getElementById('auth-btn-join').addEventListener('click', function () {
+        showPanel('register');
+        loadRegisterCard();
+      });
+      var loginChoiceBtn = document.getElementById('auth-btn-login');
+      if (loginChoiceBtn) {
+        loginChoiceBtn.addEventListener('click', function () {
+          showPanel('login');
+        });
+      }
+      document.getElementById('auth-back-from-login').addEventListener('click', function () {
+        showPanel('join');
+      });
+      var forgotBtn = document.getElementById('submit-forgot');
+      if (forgotBtn) {
+        forgotBtn.addEventListener('click', function () {
+          showPanel('forgot');
+          loadForgotCard();
+        });
+      }
+      var reactivateBtn = document.getElementById('submit-reactivate');
+      if (reactivateBtn) {
+        reactivateBtn.addEventListener('click', function () {
+          showPanel('reactivate');
+          loadReactivateCard();
+        });
+      }
+      document.querySelectorAll('[data-auth-legal]').forEach(function (el) {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          loadLegalCard(el.getAttribute('data-auth-legal') || 'terms', true);
+        });
+      });
+
+      function bindRegisterForm() {
+        var form = document.getElementById('register-form');
+        var msg = document.getElementById('register-msg');
+        var btn = document.getElementById('register-submit');
+        if (!form || !msg || !btn) return;
+        var registerHintMap = {
+          'reg-email': form.querySelector('.hint[data-hint-for="reg-email"]'),
+          'reg-password': form.querySelector('.hint[data-hint-for="reg-password"]')
+        };
+
+        function clearRegisterHintErrors() {
+          Object.keys(registerHintMap).forEach(function (key) {
+            var hintEl = registerHintMap[key];
+            if (hintEl) hintEl.classList.remove('hint--error');
+          });
+        }
+
+        function shakeRegisterSubmit() {
+          btn.classList.remove('btn-shake-no');
+          void btn.offsetWidth;
+          btn.classList.add('btn-shake-no');
+        }
+
+        function applyRegisterValidationFeedback() {
+          clearRegisterHintErrors();
+          var invalid = false;
+          Object.keys(registerHintMap).forEach(function (id) {
+            var field = document.getElementById(id);
+            var hintEl = registerHintMap[id];
+            if (!field || !hintEl) return;
+            if (!field.checkValidity()) {
+              hintEl.classList.add('hint--error');
+              invalid = true;
+            }
+          });
+          return invalid;
+        }
+
+        form.addEventListener('input', function () {
+          clearRegisterHintErrors();
+        });
+
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+          msg.textContent = '';
+          var hasInvalid = applyRegisterValidationFeedback();
+          if (hasInvalid) {
+            shakeRegisterSubmit();
+            return;
+          }
+          btn.disabled = true;
+          var fd = new FormData(form);
+          try {
+            var captchaToken = await fetchRecaptchaToken('register');
+            var r = await fetch('/auth/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                email: fd.get('email'),
+                password: fd.get('password'),
+                captcha_token: captchaToken,
+                website: (fd.get('website') || '').toString()
+              }),
+              credentials: 'same-origin'
+            });
+            var data = await r.json().catch(function () { return {}; });
+            if (r.ok) {
+              window.location.href = '/login?registered=1';
+              return;
+            }
+            msg.textContent = data.error || UI.create_account_failed;
+          } catch (_) {
+            msg.textContent = UI.network_error_detail;
+          } finally {
+            btn.disabled = false;
+          }
+        });
+        startGoogleOidc(document.getElementById('register-google-btn'), msg, 'oidc_google_start');
+      }
+
+      var form = document.getElementById('login-form');
+      var msg = document.getElementById('msg');
+      var btn = document.getElementById('submit');
+      var resendBtn = document.getElementById('submit-resend');
+      var emailInput = document.getElementById('email');
+      var passwordInput = document.getElementById('password');
+      var loginHintMap = {
+        email: form.querySelector('.hint[data-hint-for="email"]'),
+        password: form.querySelector('.hint[data-hint-for="password"]')
+      };
+
+      function clearLoginHintErrors() {
+        Object.keys(loginHintMap).forEach(function (key) {
+          var hintEl = loginHintMap[key];
+          if (hintEl) hintEl.classList.remove('hint--error');
+        });
+      }
+
+      function shakeCtaButton(el) {
+        if (!el) return;
+        el.classList.remove('btn-shake-no');
+        void el.offsetWidth;
+        el.classList.add('btn-shake-no');
+      }
+
+      function isUnauthorizedError(data) {
+        if (!data) return false;
+        var code = (data.code || '').toString().toLowerCase();
+        var err = (data.error || '').toString().trim().toLowerCase();
+        return code === 'unauthorized' || err === 'unauthorized';
+      }
+
+      function hasValidLoginInputs() {
+        clearLoginHintErrors();
+        var invalid = false;
+        Object.keys(loginHintMap).forEach(function (id) {
+          var field = document.getElementById(id);
+          var hintEl = loginHintMap[id];
+          if (!field || !hintEl) return;
+          if (!field.checkValidity()) {
+            hintEl.classList.add('hint--error');
+            invalid = true;
+          }
+        });
+        if (invalid) return false;
+        var email = (emailInput.value || '').trim();
+        var password = (passwordInput.value || '').trim();
+        if (!email || !password) {
+          msg.style.color = '';
+          msg.textContent = UI.request_failed;
+          return false;
+        }
+        return true;
+      }
+
+      async function resendFromLoginForm(fd) {
+        try {
+          var r = await fetch('/auth/resend-verification', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ email: fd.get('email'), password: fd.get('password') }),
+            credentials: 'same-origin'
+          });
+          if (r.status === 202) {
+            msg.style.color = 'var(--muted)';
+            msg.textContent = UI.resend_maybe_sent;
+          } else {
+            var d = await r.json().catch(function () { return {}; });
+            msg.style.color = '';
+            msg.textContent = d.error || UI.request_failed;
+          }
+        } catch (_) {
+          msg.style.color = '';
+          msg.textContent = UI.network_error_short;
+        }
+      }
+
+      resendBtn.addEventListener('click', async function () {
+        msg.textContent = '';
+        msg.style.color = '';
+        if (!hasValidLoginInputs()) {
+          shakeCtaButton(btn);
+          shakeCtaButton(resendBtn);
+          return;
+        }
+        btn.disabled = true;
+        resendBtn.disabled = true;
+        const fd = new FormData(form);
+        await resendFromLoginForm(fd);
+        btn.disabled = false;
+        resendBtn.disabled = false;
+      });
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msg.textContent = '';
+        msg.style.color = '';
+        if (!hasValidLoginInputs()) {
+          shakeCtaButton(btn);
+          return;
+        }
+        btn.disabled = true;
+        resendBtn.disabled = true;
+        const fd = new FormData(form);
+        try {
+          const captchaToken = await fetchRecaptchaToken('login');
+          const r = await fetch('/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              email: fd.get('email'),
+              password: fd.get('password'),
+              captcha_token: captchaToken
+            }),
+            credentials: 'same-origin'
+          });
+          const data = await r.json().catch(function () { return {}; });
+          if (r.ok) {
+            window.location.href = data.next || '/home';
+            return;
+          }
+          if (data.code === 'use_oidc') {
+            msg.style.color = '';
+            msg.textContent = data.error || UI.use_google_sign_in || UI.sign_in_failed;
+          } else if (data.code === 'email_not_verified') {
+            msg.style.color = '';
+            msg.textContent = data.error || UI.email_not_verified_fallback;
+          } else if (isUnauthorizedError(data)) {
+            msg.style.color = '';
+            msg.textContent = UI.login_unsuccessful_caps;
+          } else {
+            msg.textContent = data.error || UI.sign_in_failed;
+          }
+        } catch (err) {
+          msg.textContent =
+            err && err.message === 'recaptcha_not_loaded'
+              ? (UI.recaptcha_load_failed || UI.network_error_detail)
+              : UI.network_error_detail;
+        } finally {
+          btn.disabled = false;
+          resendBtn.disabled = false;
+        }
+      });
+      form.addEventListener('input', function () {
+        clearLoginHintErrors();
+      });
+      startGoogleOidc(document.getElementById('login-google-btn'), msg, 'oidc_google_start');
+    })();
+  </script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+</body>
+</html>

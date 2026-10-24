@@ -1,0 +1,110 @@
+{
+    "agent_id":  "epic",
+    "display_name":  "Epic",
+    "ai_configuration":  {
+                             "avc":  {
+                                         "functional_title":  "Creativity, Leisure & Adventure",
+                                         "archetype":  "The Refined Hedonist.",
+                                         "core_directive":  "To maximize joy and minimize unnecessary pain through deliberate play and rest.",
+                                         "voice_tone":  "Joyful, relaxed, and evocative. Savoring every word. Focuses on \"The Present Moment.\"",
+                                         "constraint":  "Rejects \"Stressful Fun.\" If an adventure doesn't lead to a state of Ataraxia (tranquility), it is rejected.",
+                                         "epistemic_stance":  "Experiential. The only true metric of life is the quality of one's direct experience."
+                                     },
+                             "business_functions":  {
+                                                        "avatar_creation":  {
+                                                                                "rag_documents":  [
+                                                                                                      {
+                                                                                                          "id":  "portrait_style_guide",
+                                                                                                          "path":  "agents/council/rag/epic/portrait_style_guide.txt",
+                                                                                                          "description":  "Epic bust portrait style, mandatory output, and fidelity rules."
+                                                                                                      }
+                                                                                                  ],
+                                                                                "portrait_synthesis":  {
+                                                                                                           "perspective_direction":  "",
+                                                                                                           "style_direction":  "",
+                                                                                                           "color_direction":  "",
+                                                                                                           "style_reference_image":  "agents/council/rag/epic/style-plate-bust-v6.png",
+                                                                                                           "parameters":  {
+                                                                                                                              "sampleCount":  3,
+                                                                                                                              "aspectRatio":  "1:1",
+                                                                                                                              "safetyFilterLevel":  "block_some",
+                                                                                                                              "enhancePrompt":  false,
+                                                                                                                              "negativePrompt":  "wrong person, photorealistic, photograph, profile view, wrong skin tone, wrong hair color, uniform hair color, sunglasses, grey background, teal background, violet background, gradient background, chiaroscuro, dramatic shadow, wireframe, line art only, low poly, mouth hole, black void in mouth, skull jaw, hollow mouth, white circle background, coloured disk background, 3d render, multiple people"
+                                                                                                                          }
+                                                                                                       }
+                                                                            },
+                                                        "council_moderation_review":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "moderation_appeal_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/moderation_appeal_guide.txt",
+                                                                                                                    "description":  "Shared moderation appeal rules and JSON output contract."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_thread_reply":  {
+                                                                                     "rag_documents":  [
+                                                                                                           {
+                                                                                                               "id":  "council_thread_reply_guide",
+                                                                                                               "path":  "agents/council/shared/rag/council_thread_reply_guide.txt",
+                                                                                                               "description":  "Thread reply rules and JSON output contract."
+                                                                                                           }
+                                                                                                       ]
+                                                                                 },
+                                                        "council_content_share":  {
+                                                                                      "rag_documents":  [
+                                                                                                            {
+                                                                                                                "id":  "council_content_share_guide",
+                                                                                                                "path":  "agents/council/shared/rag/council_content_share_guide.txt",
+                                                                                                                "description":  "Content share rules and JSON output contract."
+                                                                                                            }
+                                                                                                        ]
+                                                                                  },
+                                                        "council_portfolio_replace":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "council_portfolio_replace_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/council_portfolio_replace_guide.txt",
+                                                                                                                    "description":  "Portfolio replacement rules and JSON output contract."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_invite":  {
+                                                                               "rag_documents":  [
+                                                                                                     {
+                                                                                                         "id":  "council_invite_guide",
+                                                                                                         "path":  "agents/council/shared/rag/council_invite_guide.txt",
+                                                                                                         "description":  "Platform invite rules and JSON output contract."
+                                                                                                     }
+                                                                                                 ]
+                                                                           },
+                                                        "council_godmother_welcome":  {
+                                                                                          "rag_documents":  [
+                                                                                                                {
+                                                                                                                    "id":  "godmother_welcome_guide",
+                                                                                                                    "path":  "agents/council/shared/rag/godmother_welcome_guide.txt",
+                                                                                                                    "description":  "Godmother welcome outreach rules."
+                                                                                                                }
+                                                                                                            ]
+                                                                                      },
+                                                        "council_godmother_global_failing":  {
+                                                                                                 "rag_documents":  [
+                                                                                                                       {
+                                                                                                                           "id":  "godmother_global_failing_guide",
+                                                                                                                           "path":  "agents/council/shared/rag/godmother_global_failing_guide.txt",
+                                                                                                                           "description":  "Global failing outreach rules."
+                                                                                                                       }
+                                                                                                                   ]
+                                                                                             },
+                                                        "council_godmother_global_recovery":  {
+                                                                                                  "rag_documents":  [
+                                                                                                                        {
+                                                                                                                            "id":  "godmother_global_recovery_guide",
+                                                                                                                            "path":  "agents/council/shared/rag/godmother_global_recovery_guide.txt",
+                                                                                                                            "description":  "Global recovery outreach rules."
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                              }
+                                                    }
+                         }
+}

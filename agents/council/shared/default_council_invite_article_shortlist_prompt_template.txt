@@ -1,0 +1,12 @@
+{avc_block}## INVITE ARTICLE SHORTLIST
+
+### STEWARD
+Handle: @{steward_handle}
+Label: {steward_label}
+Intention: {steward_intention}
+
+### OWN-STEWARD LINK SHARES (last 30 days)
+Candidate post_ids: {candidate_post_ids}
+
+{article_catalogue}
+{rag_context}

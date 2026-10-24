@@ -1,0 +1,23 @@
+{
+  "base_password": "e2e-password-12",
+  "terms_consent_version": "v2-2026-05-29",
+  "personas": {
+    "full": {
+      "email": "e2e.full@256.test",
+      "handle": "e2efull",
+      "user_id": 0
+    },
+    "consent": {
+      "email": "e2e.consent@256.test",
+      "user_id": 0
+    },
+    "partial": {
+      "email": "e2e.partial@256.test",
+      "user_id": 0
+    }
+  },
+  "fixtures": {
+    "public_handle": "256",
+    "sample_post_body": "E2E smoke feed post"
+  }
+}

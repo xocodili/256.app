@@ -1,0 +1,9 @@
+{avc_block}## GODMOTHER GLOBAL RECOVERY
+
+### MEMBER
+Handle: @{human_handle}
+
+### LINKS
+Civic standing: {civic_standing_url}
+How it works: {how_it_works_url}
+{rag_context}

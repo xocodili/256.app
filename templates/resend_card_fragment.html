@@ -1,0 +1,17 @@
+<section class="card auth-card" data-auth-card="resend">
+  <div class="card-accent" role="presentation"></div>
+  <h1>@@ui.login.resend_card_heading@@</h1>
+  <p class="sub">@@ui.login.resend_card_subtitle@@</p>
+  <p class="sub auth-resend-notice" id="resend-notice" hidden></p>
+  <form id="resend-form" class="resend-form" autocomplete="on">
+    <label for="resend-email">@@ui.shared.email_label@@</label>
+    <input id="resend-email" name="email" type="email" required autocomplete="username">
+    <label for="resend-password">@@ui.shared.password_label@@</label>
+    <input id="resend-password" name="password" type="password" required autocomplete="current-password">
+    <button type="submit" id="resend-submit" class="btn-cta">@@ui.login.send_again@@</button>
+  </form>
+  <p class="err" id="resend-fragment-msg" role="alert"></p>
+  <p class="auth-flow-back">
+    <button type="button" class="auth-text-btn" id="auth-back-from-resend">@@ui.login.back_to_start@@</button>
+  </p>
+</section>

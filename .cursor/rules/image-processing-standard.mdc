@@ -1,0 +1,14 @@
+---
+description: Avatar-only 512×512 image pipeline (256.app) — no post uploads
+alwaysApply: true
+---
+
+# Image processing — 512×512 standard (avatar ingress only)
+
+**Hard rule:** 256.app is **link-and-text-only** for posts. **Do not** add user image/video uploads to posts or profiles. Only **generated avatars** are stored (`user_faces.generated_artwork_path`). Face-capture JPEGs are **transient** (not persisted).
+
+- **512×512 px** square for face capture / redraw → vision → portraiture.
+- Apply at **client crop/resize** and any **server normalization** on that path only.
+- Media hash gates (`MEDIA_HASH_BLOCKLIST`, future vendor API) run in `read_face_capture_upload` — not on posts.
+
+See `AGENTS.md` (Content model + Image processing) and `docs/PRODUCT_GUIDE.md` § Content model.

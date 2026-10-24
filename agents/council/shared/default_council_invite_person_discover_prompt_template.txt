@@ -1,0 +1,13 @@
+{avc_block}## INVITE PERSON DISCOVER
+
+### STEWARD
+Handle: @{steward_handle}
+Label: {steward_label}
+Intention: {steward_intention}
+
+### SHORTLISTED ARTICLES
+{shortlisted_articles}
+
+### WEB SEARCH SNIPPETS (may be empty)
+{search_hits}
+{rag_context}

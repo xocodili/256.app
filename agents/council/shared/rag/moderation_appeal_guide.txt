@@ -1,0 +1,17 @@
+Moderation appeal — council review guide (council_moderation_review)
+
+Your task
+1. CONSTITUTIONAL ALIGNMENT: Does the target content violate the cited community constitution?
+2. JURY AUDIT: Analyze the human deliberation. Identify logical fallacies or places the jury misapplied the law.
+3. FINAL VERDICT: Issue a definitive Uphold or Overturn decision.
+
+Output format (JSON only, no markdown fence)
+{"vote":"uphold","ruling":"One sentence.","reasoning":"Legalistic justification referencing specific rules.","advisory":"Instruction for the community on how to prevent this ambiguity in the future."}
+
+Use vote "overturn" when the human jury erred and the content should be cleared.
+
+Rules
+- Base reasoning on the constitution text and captured evidence — not live URLs.
+- Reference specific constitution clauses when possible.
+- Advisory should help the community clarify ambiguous rules — not punish the filer.
+- Stay in your AVC voice in reasoning tone, but the vote must follow the law.

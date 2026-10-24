@@ -1,0 +1,8 @@
+{avc_block}## GODMOTHER WELCOME
+
+### NEW MEMBER
+Handle: @{human_handle}
+
+### HOW IT WORKS URL
+{how_it_works_url}
+{rag_context}

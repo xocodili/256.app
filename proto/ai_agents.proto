@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package aiagents.v1;
+
+message ImageFrame {
+  string label = 1;
+  bytes jpeg = 2;
+}
+
+message RunTextAgentRequest {
+  string agent = 1;
+  uint64 user_id = 2;
+  repeated ImageFrame images = 3;
+  map<string, string> metadata = 4;
+  // Optional caller-generated correlation id (e.g., UUIDv7) for tracing.
+  string request_id = 5;
+  // Optional mode hint for future queue-backed execution. Defaults to MODE_SYNC when unset.
+  ProcessingMode mode = 6;
+  // Optional client timeout hint (milliseconds). Gateway may clamp to policy.
+  uint32 requested_timeout_ms = 7;
+}
+
+message RunTextAgentResponse {
+  string output_text = 1;
+  string model_id = 2;
+  // Echoed correlation id (or gateway-generated id when request_id is empty).
+  string request_id = 3;
+  // Resolved logical agent id.
+  string agent = 4;
+  // Provider id that produced the response (e.g. "vertex").
+  string provider = 5;
+  // End-to-end gateway processing latency (milliseconds).
+  uint32 latency_ms = 6;
+  // Optional usage metrics (token counts, cost units, etc.).
+  map<string, string> usage = 7;
+}
+
+enum ProcessingMode {
+  PROCESSING_MODE_UNSPECIFIED = 0;
+  MODE_SYNC = 1;
+  MODE_ASYNC = 2;
+}
+
+message RunPortraitAgentRequest {
+  uint64 user_id = 1;
+  string council_handle = 2;
+  repeated ImageFrame images = 3;
+  string model_id = 4;
+  string prompt = 5;
+  // JSON object: council `portrait_synthesis.parameters`.
+  string parameters_json = 6;
+  string request_id = 7;
+  uint32 requested_timeout_ms = 8;
+  // Appended to Imagen subject reference [1] subjectDescription (vision colour card).
+  string subject_description_suffix = 9;
+}
+
+message RunPortraitAgentResponse {
+  bytes png = 1;
+  string model_id = 2;
+  string request_id = 3;
+  string provider = 4;
+  uint32 latency_ms = 5;
+}
+
+service AiAgentGateway {
+  rpc RunTextAgent(RunTextAgentRequest) returns (RunTextAgentResponse);
+  rpc RunPortraitAgent(RunPortraitAgentRequest) returns (RunPortraitAgentResponse);
+}

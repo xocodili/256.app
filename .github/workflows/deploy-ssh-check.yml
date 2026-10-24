@@ -1,0 +1,34 @@
+# Fast SSH preflight for beta deploy secrets — no build/test.
+# Use after rotating VM_SSH_KEY or registering gha_deploy.pub in GCP metadata.
+name: Deploy SSH check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ssh-check:
+    runs-on: ubuntu-22.04
+    env:
+      VM_HOST: ${{ secrets.VM_HOST }}
+      VM_USER: ${{ secrets.VM_USER }}
+      VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+      VM_SSH_KEY_B64: ${{ secrets.VM_SSH_KEY_B64 }}
+      KEY_PATH: ~/.ssh/gha_deploy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate deploy secrets
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh validate-secrets
+      - name: Install deploy SSH key
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh install-key
+      - name: Log deploy key fingerprint
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh print-fingerprint
+      - name: Verify VM SSH
+        run: |
+          set -euo pipefail
+          ssh -i "$KEY_PATH" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            "${VM_USER}@${VM_HOST}" \
+            'set -e; echo "SSH OK — host=$(hostname) user=$(whoami)"; test -d ~/256.app || { echo "~/256.app missing"; exit 1; }; mkdir -p ~/deploy-staging; echo "deploy-staging ready"'

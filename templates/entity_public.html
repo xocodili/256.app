@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  __SITE_FAVICON__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>__DOCUMENT_TITLE__</title>
+  <meta name="description" content="__META_DESCRIPTION__">
+  <link rel="canonical" href="__CANONICAL_URL__">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="__OG_SITE_NAME__">
+  <meta property="og:title" content="__OG_TITLE__">
+  <meta property="og:description" content="__OG_DESCRIPTION__">
+  <meta property="og:url" content="__OG_URL__">
+  __SITE_OG_IMAGE_META__
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="__OG_TITLE__">
+  <meta name="twitter:description" content="__OG_DESCRIPTION__">
+  <script type="application/ld+json">__JSON_LD__</script>
+  <link rel="stylesheet" href="/static/css/brand.css?v=20260613-pantheon-muted">
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell app-shell--guest">
+    __PUBLIC_TOPBAR__
+    __GUEST_MARKETING_SPRITE__
+    <div class="guest-split guest-split--entity-profile" id="guest-split-public">
+      __GUEST_PUBLIC_STACK_TOP__
+      <section class="guest-right-panel guest-public-profile-panel">
+        <main class="card auth-card entity-public-card guest-right-card__ENTITY_PUBLIC_PROFILE_ACCENT_CLASSES__" id="entity-public-card">
+          <div class="card-accent" role="presentation"></div>
+          <div id="entity-card-loading" class="entity-card-loading" aria-live="polite">
+            __CARD_LOADER_ENTITY__
+          </div>
+          <div id="entity-card-root" class="entity-card-root" hidden></div>
+          <p id="entity-card-error" class="entity-card-error" hidden role="alert"></p>
+        </main>
+      </section>
+      __GUEST_PUBLIC_BENEFITS__
+    </div>
+  </div>
+  __PUBLIC_FOOTER__
+  <script src="/static/js/guest-shell-scroll.js" defer></script>
+  <script type="application/json" id="entity-public-ui">__ENTITY_PUBLIC_UI_JSON__</script>
+  <script type="application/json" id="entity-public-boot">__ENTITY_PUBLIC_BOOT_JSON__</script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+  <script src="/static/js/entity-public-card.js" defer></script>
+</body>
+</html>

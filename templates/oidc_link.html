@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  __SITE_FAVICON__
+  <title>@@auth.oidc_link_heading@@</title>
+  <link rel="stylesheet" href="/static/css/brand.css">
+  __RECAPTCHA_SCRIPT__
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell app-shell--guest">
+    <main class="app-main guest-auth-main">
+      <section class="card auth-card card--action">
+        <div class="card-accent" role="presentation"></div>
+        <h1>@@auth.oidc_link_heading@@</h1>
+        <p class="sub" id="oidc-link-subtitle">@@auth.oidc_link_subtitle@@</p>
+        <form id="oidc-link-form" dir="ltr" autocomplete="on" novalidate>
+          <label for="oidc-link-password">@@ui.shared.password_label@@</label>
+          <input id="oidc-link-password" name="password" type="password" required minlength="12" autocomplete="current-password" dir="ltr" spellcheck="false">
+          <button type="submit" id="oidc-link-submit" class="btn-cta">@@auth.oidc_link_submit@@</button>
+        </form>
+        <p class="err" id="oidc-link-msg" role="alert"></p>
+      </section>
+    </main>
+  </div>
+  <script type="application/json" id="oidc-link-i18n">__OIDC_LINK_I18N_JSON__</script>
+  <script>
+    (function () {
+      var UI = JSON.parse(document.getElementById('oidc-link-i18n').textContent);
+      var RECAPTCHA_SITE_KEY = '__RECAPTCHA_SITE_KEY__';
+      var form = document.getElementById('oidc-link-form');
+      var msg = document.getElementById('oidc-link-msg');
+      var btn = document.getElementById('oidc-link-submit');
+      var subtitle = document.getElementById('oidc-link-subtitle');
+      if (subtitle && UI.subtitle) subtitle.textContent = UI.subtitle;
+
+      function fetchRecaptchaToken(action) {
+        if (!RECAPTCHA_SITE_KEY || typeof grecaptcha === 'undefined') return Promise.resolve('');
+        return new Promise(function (resolve, reject) {
+          grecaptcha.ready(function () {
+            grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: action }).then(resolve).catch(reject);
+          });
+        });
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msg.textContent = '';
+        if (!form.checkValidity()) {
+          msg.textContent = UI.sign_in_failed_generic || 'Could not sign in.';
+          return;
+        }
+        btn.disabled = true;
+        try {
+          var captchaToken = await fetchRecaptchaToken('oidc_link_password');
+          var r = await fetch('/auth/oidc/link', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              password: document.getElementById('oidc-link-password').value,
+              captcha_token: captchaToken
+            }),
+            credentials: 'same-origin'
+          });
+          var data = await r.json().catch(function () { return {}; });
+          if (r.ok && data.next) {
+            window.location.href = data.next;
+            return;
+          }
+          msg.textContent = UI.sign_in_failed_generic || 'Could not sign in.';
+        } catch (_) {
+          msg.textContent = UI.network_error_detail || 'Network error.';
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<section class="card app-card card--action app-search-add-card" id="search-add-card">
+  <div class="card-accent" role="presentation"></div>
+  <header class="create-post-card-header">
+    <h1>@@ui.home.search_results_title@@</h1>
+  </header>
+
+  <div id="search-add-form" class="search-add-form">
+    <p
+      class="hint create-post-submit-status"
+      id="search-add-status"
+      hidden
+      aria-live="polite"
+    ></p>
+
+    <ul id="search-add-results" class="search-add-results" aria-live="polite" aria-label="@@ui.home.search_add_results_aria@@">
+      <li class="search-add-empty-state" id="search-add-empty-state">@@ui.home.search_no_results@@</li>
+    </ul>
+
+    <section class="search-add-recommendations" id="search-add-recommendations">
+      <div id="search-add-recommendations-sections" class="search-add-recommendations-sections" aria-live="polite"></div>
+      <p class="hint search-add-recommendations-empty" id="search-add-recommendations-empty" hidden>@@ui.home.search_recommendations_empty@@</p>
+    </section>
+
+    <h2 class="search-add-create-title">@@ui.home.search_add_create_title@@</h2>
+    <div class="search-add-create-cards" role="group" aria-label="@@ui.home.search_add_create_cards_aria@@">
+      <button
+        type="button"
+        class="search-add-entity-snippet search-add-entity-snippet--community search-add-suggest-btn"
+        data-create-type="community"
+        title="@@ui.home.search_add_card_community_btn_title@@"
+        aria-labelledby="search-add-snippet-community-title"
+        aria-describedby="search-add-snippet-community-desc"
+      >
+        <span class="search-add-entity-snippet-inner">
+          <span class="search-add-entity-snippet-title" id="search-add-snippet-community-title">@@ref_values.social_entity_type.community@@</span>
+          <span class="search-add-entity-snippet-desc" id="search-add-snippet-community-desc">@@ui.home.search_add_card_community_lead@@</span>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="search-add-entity-snippet search-add-entity-snippet--gathering search-add-suggest-btn"
+        data-create-type="gathering"
+        title="@@ui.home.search_add_card_event_btn_title@@"
+        aria-labelledby="search-add-snippet-gathering-title"
+        aria-describedby="search-add-snippet-gathering-desc"
+      >
+        <span class="search-add-entity-snippet-inner">
+          <span class="search-add-entity-snippet-title" id="search-add-snippet-gathering-title">@@ui.home.search_add_event_label@@</span>
+          <span class="search-add-entity-snippet-desc" id="search-add-snippet-gathering-desc">@@ui.home.search_add_card_event_lead@@</span>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="search-add-entity-snippet search-add-entity-snippet--profit search-add-suggest-btn"
+        data-create-type="profit"
+        title="@@ui.home.search_add_card_business_btn_title@@"
+        aria-labelledby="search-add-snippet-profit-title"
+        aria-describedby="search-add-snippet-profit-desc"
+      >
+        <span class="search-add-entity-snippet-inner">
+          <span class="search-add-entity-snippet-title" id="search-add-snippet-profit-title">@@ui.home.search_add_business_label@@</span>
+          <span class="search-add-entity-snippet-desc" id="search-add-snippet-profit-desc">@@ui.home.search_add_card_business_lead@@</span>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="search-add-entity-snippet search-add-entity-snippet--non-profit search-add-suggest-btn"
+        data-create-type="non_profit"
+        title="@@ui.home.search_add_card_nonprofit_btn_title@@"
+        aria-labelledby="search-add-snippet-nonprofit-title"
+        aria-describedby="search-add-snippet-nonprofit-desc"
+      >
+        <span class="search-add-entity-snippet-inner">
+          <span class="search-add-entity-snippet-title" id="search-add-snippet-nonprofit-title">@@ref_values.social_entity_type.non_profit@@</span>
+          <span class="search-add-entity-snippet-desc" id="search-add-snippet-nonprofit-desc">@@ui.home.search_add_card_nonprofit_lead@@</span>
+        </span>
+      </button>
+    </div>
+
+    <section class="search-add-invite-friend" id="search-add-invite-friend">
+      <h2 class="search-add-create-title">@@ui.home.search_add_invite_friend_title@@</h2>
+      <p
+        class="hint create-post-submit-status search-add-invite-status"
+        id="search-add-invite-status"
+        hidden
+        aria-live="polite"
+      ></p>
+      <form id="search-add-invite-form" class="search-add-invite-form" action="/me/friend-invite" method="post" novalidate>
+        <input
+          type="email"
+          id="search-add-invite-email"
+          name="email"
+          class="field-input search-add-invite-email"
+          autocomplete="email"
+          inputmode="email"
+          placeholder="@@ui.home.search_add_invite_email_placeholder@@"
+          aria-label="@@ui.home.search_add_invite_email_placeholder@@"
+          required
+        />
+        <input
+          type="text"
+          id="search-add-invite-message"
+          name="message"
+          class="field-input search-add-invite-message"
+          maxlength="500"
+          hidden
+          placeholder="@@ui.home.search_add_invite_message_placeholder@@"
+          aria-label="@@ui.home.search_add_invite_message_placeholder@@"
+          autocomplete="off"
+        />
+        <button type="submit" class="auth-text-btn btn-cta search-add-invite-send" id="search-add-invite-send" disabled>@@ui.home.search_add_invite_send_cta@@</button>
+      </form>
+    </section>
+
+    <p class="auth-flow-back">
+      <button type="button" id="search-add-back" class="auth-text-btn">@@ui.shared.back@@</button>
+    </p>
+  </div>
+</section>

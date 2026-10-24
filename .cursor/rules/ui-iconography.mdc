@@ -1,0 +1,37 @@
+---
+description: Icon sizes, council-informed art direction, system-icon hover
+alwaysApply: true
+---
+
+# UI iconography
+
+Canonical doc: [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md).
+
+## Size tokens (`static/css/brand.css`)
+
+- `--icon-size-lg` (48px) — avatars / identity (`--avatar-display-size`)
+- `--icon-size-md` (32px) — post actions, rail function glyphs
+- `--icon-size-sm` (16px) — inline badges, compact thread/reply
+
+Author action SVGs on 24×24 viewBox; scale with CSS, not raster.
+
+## Council avatars as reference
+
+Council portraits (`static/generated/council/`) use humanist editorial illustration, clear silhouettes, restrained texture, ≤64-colour palette. Function icons should echo that clarity at 16–32px (stroke-only, round joins, minimal interior detail).
+
+## Hover
+
+- **Function/system** icons (post actions, interactive rail controls, **feed chrome nav** `<<` `<` `>` `^`): hover/focus → `--ui-system-icon-hover` (yellow).
+- **Links** and non-icon text actions: `--ui-action-hover` (blue).
+- **CTAs** (`.btn-cta`): yellow text; not the same as icon hover.
+
+## Feed chrome nav set
+
+Paging (`<<`, `<`, `>`) and scroll-to-top (`^`) are one matched set — yellow chevron on dark disc (`.app-chrome-nav-btn`). Symbols: `icon-feed-first`, `icon-feed-prev`, `icon-feed-next`, `icon-feed-top` in `post-actions.svg`. See [`docs/ICONOGRAPHY.md`](docs/ICONOGRAPHY.md) § Feed chrome nav set.
+
+## Do not
+
+- Use yellow hover on identity avatars or semantic state colours (selected vote, feel heart).
+- Introduce ad hoc icon pixel sizes outside the lg/md/sm ladder without updating `ICONOGRAPHY.md`.
+
+When adding icons, update `static/icons/post-actions.svg` + `src/ui/post_icons.rs` and follow the redesign checklist in `docs/ICONOGRAPHY.md`.

@@ -1,0 +1,65 @@
+-- HELD — DO NOT APPLY. Superseded by docs/ROOT_CONSTITUTION_PROPOSAL.md (ready for implementation, owner gate 2026-05-24).
+-- This file is a same-day draft only. Write a new migration from the proposal when approved.
+--
+-- Constitutional safety framework: revise root charter items 4, 7, 9, 11;
+-- add items 13–14; remove judicial_trigger_chk from item 11.
+
+SET @root_community_id := (
+    SELECT se.id
+    FROM social_entity se
+    INNER JOIN social_community sc ON sc.social_entity_id = se.id
+    WHERE se.handle = 'operating_charter_256'
+    LIMIT 1
+);
+
+UPDATE community_constitution_item
+SET item = 'Universal Safety Floor — The Network prohibits content and conduct that universally endangers people, regardless of locale: child sexual abuse material and exploitation; credible threats of physical violence; non-consensual intimate imagery; fraud, scams, and impersonation for harm; coordinated harassment and bullying as conduct; and distribution of malware or phishing. This floor is independent of any single country''s criminal code. Identity and lawful belief expression protected under Cognitive Liberty (item 7) are not violations of this floor solely because they are illegal or stigmatized elsewhere.',
+    judicial_trigger_chk = 1
+WHERE community_id = @root_community_id
+  AND point = 4
+  AND status = 'active';
+
+UPDATE community_constitution_item
+SET item = 'Cognitive Liberty & Protected Identity — The Network shall not mandate internal thought, only external conduct. Communities may define Topic Relevance, but may not prohibit Internal Belief. Sexual orientation, gender identity, disability, ethnicity, religion, and non-belief are protected identity and belief. Locale law or custom is not grounds to remove lawful identity expression that does not otherwise violate the Universal Safety Floor (item 4).',
+    judicial_trigger_chk = 0
+WHERE community_id = @root_community_id
+  AND point = 7
+  AND status = 'active';
+
+UPDATE community_constitution_item
+SET item = 'Preservation of the Tree — No community rule may override a Root principle. The Tree''s structural logic (Inheritance) is the final arbiter of community fitness. Precedence among root principles: Universal Safety Floor (4), then Voluntary Association, Right of Exit, and Cognitive Liberty & Protected Identity (1, 2, 7), then governance machinery, then locale addenda, then Legal Process & Cross-Border Visibility (11).',
+    judicial_trigger_chk = 0
+WHERE community_id = @root_community_id
+  AND point = 9
+  AND status = 'active';
+
+UPDATE community_constitution_item
+SET item = 'Legal Process & Cross-Border Visibility — The Network cooperates with valid legal process where the operator has legal duty or nexus. Lawful authority requests are handled by the operator, not by post-dispute juries. When content is lawful in its community context under root principles but restricted in another jurisdiction, the Network may limit visibility by viewer geography rather than require global removal. Participants must not use this principle as a post-dispute claim that foreign criminal law alone makes content removable network-wide.',
+    judicial_trigger_chk = 0
+WHERE community_id = @root_community_id
+  AND point = 11
+  AND status = 'active';
+
+SET @system_uid := (SELECT id FROM users WHERE email = 'system@256.app' LIMIT 1);
+
+INSERT INTO community_constitution_item (community_id, point, item, status, judicial_trigger_chk, created_by, modified_by)
+SELECT @root_community_id, 13, x.item, 'active', 0, @system_uid, @system_uid
+FROM (
+    SELECT 'Safety Reporting & Acute Harm — Content that may imminently harm a person, or that appears to violate the Universal Safety Floor (item 4), must be reported through the platform safety channel, not only a post dispute. Post disputes address constitutional disagreement on normal timelines; they are not an emergency service.' AS item
+) AS x
+WHERE @root_community_id IS NOT NULL
+  AND NOT EXISTS (
+      SELECT 1 FROM community_constitution_item cci
+      WHERE cci.community_id = @root_community_id AND cci.point = 13
+  );
+
+INSERT INTO community_constitution_item (community_id, point, item, status, judicial_trigger_chk, created_by, modified_by)
+SELECT @root_community_id, 14, x.item, 'active', 1, @system_uid, @system_uid
+FROM (
+    SELECT 'Dignity in Civic Process — Filing judicial cases, jury service, and appeals must not be used to harass, brigade, retaliate, or re-traumatize participants. Bad-faith dispute filing violates this principle and may result in operator action or fitness consequences.' AS item
+) AS x
+WHERE @root_community_id IS NOT NULL
+  AND NOT EXISTS (
+      SELECT 1 FROM community_constitution_item cci
+      WHERE cci.community_id = @root_community_id AND cci.point = 14
+  );

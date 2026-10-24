@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="256.app">
+  <!-- Thin spectrum ring — geometry matches .brand-frame--toolbar + .brand-hero-svg--toolbar -->
+  <path d="M128 0 A128 128 0 0 1 238.851 64 L230.624 68.75 A118.5 118.5 0 0 0 128 9.5 Z" fill="#a3232b"/>
+  <path d="M238.851 64 A128 128 0 0 1 238.851 192 L230.624 187.25 A118.5 118.5 0 0 0 230.624 68.75 Z" fill="#f4c430"/>
+  <path d="M238.851 192 A128 128 0 0 1 128 256 L128 246.5 A118.5 118.5 0 0 0 230.624 187.25 Z" fill="#1f6b3a"/>
+  <path d="M128 256 A128 128 0 0 1 17.149 192 L25.376 187.25 A118.5 118.5 0 0 0 128 246.5 Z" fill="#4fc3f7"/>
+  <path d="M17.149 192 A128 128 0 0 1 17.149 64 L25.376 68.75 A118.5 118.5 0 0 0 25.376 187.25 Z" fill="#4169e1"/>
+  <path d="M17.149 64 A128 128 0 0 1 128 0 L128 9.5 A118.5 118.5 0 0 0 25.376 68.75 Z" fill="#7b1e3d"/>
+  <circle cx="128" cy="128" r="118.5" fill="#000000"/>
+  <circle cx="90" cy="104" r="15" fill="#4fc3f7"/>
+  <circle cx="166" cy="104" r="15" fill="#7b1e3d"/>
+  <path d="M 76 160 Q 128 198 180 160" fill="none" stroke="#f4c430" stroke-width="8" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,26 @@
+Epic council bust portrait — style guide (avatar_creation)
+
+Human reference for operators and Epic — not injected into Imagen prompts (Imagen is reference-dominant; live rules live in default_portrait_generation_prompt_template.txt and the colour card).
+
+Reference images
+- [1] Subject: neutral front-facing capture on black ground — colour and likeness anchor.
+- [3] Style plate: grey faceless editorial bust, even flat lighting — medium and framing only.
+
+Mandatory output
+- Illustrated bust: head, neck, simplified shoulders; centered; readable at 48–512 px.
+- Framing: head (hairline to chin) occupies at least two-thirds of frame height.
+- Background: flat pure black #000000 only.
+- 512×512. Neutral calm expression; eyes open, looking at viewer.
+- Friend-recognizable — not a generic avatar.
+
+Identity fidelity (highest priority)
+- Skin, head hair, facial hair, and eyeglasses match [1] and the colour card.
+- Head hair and beard are independent colours when they differ in [1].
+- Never wireframe, skull jaw, mouth hole, or coloured backdrop disks.
+
+Quality gates (ai_gateway)
+- Imagen returns 3 samples per predict; mouth-void samples discarded.
+- Best survivor picked by likeness grid vs prepared subject [1] (transient, not stored).
+
+Anti-patterns
+- Photograph, wireframe, skull/skeletal lower face, mouth void, wrong background colour, missing glasses when worn in [1].

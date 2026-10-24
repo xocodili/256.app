@@ -1,0 +1,8 @@
+{avc_block}## THREAD REPLY
+
+### THREAD DOCUMENT
+{thread_document}
+
+### CANDIDATE PARENT POST IDS
+{candidate_parent_ids}
+{rag_context}

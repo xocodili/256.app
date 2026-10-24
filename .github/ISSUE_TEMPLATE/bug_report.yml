@@ -1,0 +1,33 @@
+name: Bug report
+description: Something isn't working
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: Include the exact error and the URL/route.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error
+  - type: input
+    id: logs
+    attributes:
+      label: Relevant log line (journalctl -u twofivesix)
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "P0 - blocks signup/site"
+        - "P1 - major"
+        - "P2 - minor"
+    validations:
+      required: true

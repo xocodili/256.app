@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="__HTML_LANG__">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">  __SITE_FAVICON__
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <title>__JUD_COMMUNITY_AMEND_TITLE__</title>
+  <link rel="stylesheet" href="/static/css/brand.css">
+</head>
+<body class="app-shell-body app-shell-body--viewport-lock">
+  <div class="app-shell" data-needs-profile="0" data-self-private-handle="__HOME_SELF_PRIVATE_HANDLE__" data-connection-count="__HOME_CONNECTION_COUNT__">
+    __SECURED_TOPBAR__
+    __HOME_RAIL_HTML__
+    <div class="__HOME_APP_STAGE_CLASS__">
+      <main class="app-main" id="app-main">
+        <div id="app-home-feed-panel" class="app-cards judicial-post-case-panel">
+          __JUD_COMMUNITY_CONTEXT_CARD__
+          __JUD_COMMUNITY_AMEND_FORM_CARD__
+        </div>
+      </main>
+    </div>
+  </div>
+  __SECURED_PUBLIC_FOOTER__
+  <script type="application/json" id="home-shell-i18n">__HOME_SHELL_I18N_JSON__</script>
+  <script src="/static/js/smiley-blink.js" defer></script>
+  <script>
+    (function () {
+      var form = document.getElementById("judicial-community-amendment-form");
+      if (!form) return;
+      var kindSelect = document.getElementById("judicial-amendment-kind");
+      var proposalPanel = document.getElementById("judicial-amendment-proposal-panel");
+      var targetPanel = document.getElementById("judicial-amendment-target-panel");
+      var proposalEditor = document.getElementById("judicial-amendment-proposal-editor");
+      var proposalSink = document.getElementById("judicial-amendment-proposal-input");
+      var rationaleEditor = document.getElementById("judicial-amendment-rationale-editor");
+      var rationaleSink = document.getElementById("judicial-amendment-rationale-input");
+      var proposalErr = document.getElementById("judicial-amendment-proposal-error");
+      var targetErr = document.getElementById("judicial-amendment-target-error");
+      var rationalePanel = document.getElementById("judicial-amendment-rationale-panel");
+      var rationaleErr = document.getElementById("judicial-amendment-rationale-error");
+      function plainFromHtml(html) {
+        var tmp = document.createElement("div");
+        tmp.innerHTML = String(html || "");
+        return (tmp.textContent || tmp.innerText || "").trim();
+      }
+      function bindToolbar(toolbar, editor) {
+        if (!toolbar || !editor) return;
+        toolbar.querySelectorAll("[data-editor-cmd]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var cmd = btn.getAttribute("data-editor-cmd");
+            if (!cmd) return;
+            editor.focus();
+            document.execCommand(cmd, false, null);
+          });
+        });
+      }
+      bindToolbar(form.querySelector("[data-toolbar=proposal]"), proposalEditor);
+      bindToolbar(form.querySelector("[data-toolbar=rationale]"), rationaleEditor);
+      function syncPanels() {
+        var kind = kindSelect ? kindSelect.value : "";
+        if (!kind) {
+          if (targetPanel) targetPanel.hidden = true;
+          if (proposalPanel) proposalPanel.hidden = true;
+          if (rationalePanel) rationalePanel.hidden = true;
+        } else {
+          if (targetPanel) targetPanel.hidden = kind === "new_clause";
+          if (proposalPanel) proposalPanel.hidden = kind === "remove_clause";
+          if (rationalePanel) rationalePanel.hidden = false;
+        }
+        if (proposalErr) proposalErr.hidden = true;
+        if (targetErr) targetErr.hidden = true;
+      }
+      if (kindSelect) {
+        kindSelect.addEventListener("change", syncPanels);
+        syncPanels();
+      }
+      form.addEventListener("submit", function (e) {
+        var kind = kindSelect ? kindSelect.value : "";
+        if (!kind) {
+          e.preventDefault();
+          return;
+        }
+        if (kind === "remove_clause" || kind === "amend_clause") {
+          var checked = form.querySelector('input[name="target_constitution_item_id"]:checked');
+          if (!checked) {
+            e.preventDefault();
+            if (targetErr) {
+              targetErr.hidden = false;
+              targetErr.removeAttribute("hidden");
+            }
+            return;
+          }
+          if (targetErr) {
+            targetErr.hidden = true;
+            targetErr.setAttribute("hidden", "hidden");
+          }
+        }
+        if (kind === "new_clause" || kind === "amend_clause") {
+          if (!proposalEditor || !proposalSink) {
+            e.preventDefault();
+            return;
+          }
+          var proposalHtml = proposalEditor.innerHTML || "";
+          var proposalPlain =
+            String(proposalEditor.innerText != null ? proposalEditor.innerText : "")
+              .replace(/\u00a0/g, " ")
+              .trim() || plainFromHtml(proposalHtml);
+          if (!proposalPlain) {
+            e.preventDefault();
+            if (proposalErr) {
+              proposalErr.hidden = false;
+              proposalErr.removeAttribute("hidden");
+            }
+            return;
+          }
+          if (proposalErr) {
+            proposalErr.hidden = true;
+            proposalErr.setAttribute("hidden", "hidden");
+          }
+          proposalSink.value = proposalHtml;
+        } else if (proposalSink) {
+          proposalSink.value = "";
+        }
+        if (!rationaleEditor || !rationaleSink) {
+          e.preventDefault();
+          return;
+        }
+        var rationaleHtml = rationaleEditor.innerHTML || "";
+        var rationalePlain =
+          String(rationaleEditor.innerText != null ? rationaleEditor.innerText : "")
+            .replace(/\u00a0/g, " ")
+            .trim() || plainFromHtml(rationaleHtml);
+        if (!rationalePlain) {
+          e.preventDefault();
+          if (rationaleErr) {
+            rationaleErr.hidden = false;
+            rationaleErr.removeAttribute("hidden");
+          }
+          return;
+        }
+        if (rationaleErr) {
+          rationaleErr.hidden = true;
+          rationaleErr.setAttribute("hidden", "hidden");
+        }
+        rationaleSink.value = rationaleHtml;
+      });
+    })();
+  </script>
+</body>
+</html>

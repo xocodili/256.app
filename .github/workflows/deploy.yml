@@ -1,0 +1,175 @@
+name: Deploy beta
+
+# Public portfolio snapshot: beta host is offline, so deploy is manual-only.
+on:
+  workflow_dispatch:
+    inputs:
+      reset_database:
+        description: Drop & recreate MySQL (fresh migration seeds; all beta users/posts gone)
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy-beta
+  cancel-in-progress: false
+
+jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
+  build:
+    needs: test
+    runs-on: ubuntu-22.04
+    env:
+      RUST_CACHE_KEY: 256-v2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free runner disk space
+        run: bash scripts/ci/free_runner_disk.sh
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ${{ env.RUST_CACHE_KEY }}
+          save-if: true
+          cache-targets: |
+            target/release
+            target/debug/deps
+            target/debug/build
+      - name: Build release binaries
+        run: cargo build --release --bin app --bin ai_gateway --bin db_reset
+      - uses: actions/upload-artifact@v4
+        with:
+          name: binaries
+          path: |
+            target/release/app
+            target/release/ai_gateway
+            target/release/db_reset
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+    env:
+      VM_HOST: ${{ secrets.VM_HOST }}
+      VM_USER: ${{ secrets.VM_USER }}
+      VM_SSH_KEY: ${{ secrets.VM_SSH_KEY }}
+      VM_SSH_KEY_B64: ${{ secrets.VM_SSH_KEY_B64 }}
+      KEY_PATH: ~/.ssh/gha_deploy
+      RESET_DATABASE: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.reset_database == 'true' && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: binaries
+          path: bin
+      - name: Validate deploy secrets
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh validate-secrets
+      - name: Install deploy SSH key
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh install-key
+      - name: Log deploy key fingerprint
+        run: bash scripts/ops/gha_deploy_ssh_setup.sh print-fingerprint
+      - name: Verify VM SSH (preflight)
+        run: |
+          set -euo pipefail
+          ssh -i "$KEY_PATH" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            "${VM_USER}@${VM_HOST}" \
+            'set -e; echo "SSH preflight OK — $(whoami)@$(hostname)"; test -d ~/256.app; mkdir -p ~/deploy-staging'
+      - name: Reclaim VM disk space
+        run: |
+          set -euo pipefail
+          ssh -i "$KEY_PATH" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            "${VM_USER}@${VM_HOST}" \
+            'set -e
+          rm -rf ~/256.app/target/debug ~/256.app/target/diag 2>/dev/null || true
+          find ~/256.app/target/release -mindepth 1 -maxdepth 1 \
+            ! -name app ! -name ai_gateway ! -name db_reset \
+            -exec rm -rf {} + 2>/dev/null || true
+          rm -rf ~/deploy-staging/* 2>/dev/null || true
+          mkdir -p ~/deploy-staging
+          sudo journalctl --vacuum-time=3d 2>/dev/null || true
+          cd ~/256.app && git gc --prune=now 2>/dev/null || true
+          df -h /'
+      - name: Copy binaries to VM
+        run: |
+          set -euo pipefail
+          scp -i "$KEY_PATH" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            bin/app bin/ai_gateway bin/db_reset \
+            "${VM_USER}@${VM_HOST}:~/deploy-staging/"
+      - name: Swap binaries and restart
+        run: |
+          set -euo pipefail
+          remote_script=$(cat <<EOF
+          set -e
+          cd ~/256.app
+          git fetch --all --prune
+          git reset --hard origin/main
+          mkdir -p target/release
+          install -m 0755 ~/deploy-staging/app target/release/app
+          install -m 0755 ~/deploy-staging/ai_gateway target/release/ai_gateway
+          install -m 0755 ~/deploy-staging/db_reset target/release/db_reset
+          rm -f ~/deploy-staging/app ~/deploy-staging/ai_gateway ~/deploy-staging/db_reset
+          if [ "${RESET_DATABASE}" = "true" ]; then
+            echo "=== DATABASE RESET (workflow_dispatch) ==="
+            bash scripts/ops/reset_beta_database.sh --deploy-ok --restart
+          else
+            sudo systemctl restart ai-gateway
+            sudo systemctl restart twofivesix
+          fi
+          wait_for_active() {
+            unit="\$1"
+            for i in \$(seq 1 30); do
+              state="\$(systemctl is-active "\$unit" 2>/dev/null || true)"
+              if [ "\$state" = "active" ]; then
+                echo "\$unit is active"
+                return 0
+              fi
+              echo "\$unit state=\$state (attempt \$i/30)"
+              sleep 3
+            done
+            echo "=== \$unit did not become active ==="
+            systemctl status "\$unit" --no-pager -l || true
+            journalctl -u "\$unit" -n 80 --no-pager || true
+            return 1
+          }
+          wait_for_active ai-gateway
+          wait_for_active twofivesix
+          wait_for_health() {
+            for i in \$(seq 1 30); do
+              if health="\$(curl -sf http://127.0.0.1:8080/health/status 2>/dev/null)"; then
+                echo "\$health" | head -c 500 || true
+                echo "\$health" | grep -q '"scheduler_enabled":true' || {
+                  echo "ERROR: scheduler disabled on beta (scheduler_tick_secs=0 in ~/256.app/.env?)"
+                  exit 1
+                }
+                echo "health/status OK"
+                return 0
+              fi
+              echo "health/status not ready (attempt \$i/30)"
+              sleep 3
+            done
+            echo "=== health/status never became reachable on 127.0.0.1:8080 ==="
+            systemctl status twofivesix --no-pager -l || true
+            journalctl -u twofivesix -n 80 --no-pager || true
+            return 1
+          }
+          wait_for_health
+          EOF
+          )
+          ssh -i "$KEY_PATH" \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            "${VM_USER}@${VM_HOST}" \
+            "bash -s" <<< "$remote_script"

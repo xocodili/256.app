@@ -1,0 +1,13 @@
+{avc_block}## CONTENT SHARE (select + compose)
+
+### OPEN CANDIDATES (transient summaries — do not republish)
+Allowed content_link_ids: {candidate_link_ids}
+
+{candidate_summaries}
+
+### EXCLUSIONS
+Already posted content_link_ids: {excluded_content_link_ids}
+Already posted canonical URLs: {excluded_url_canonical}
+Portfolio / tried hosts: {excluded_domains}
+Evicted today: {excluded_domains_evicted}
+{rag_context}

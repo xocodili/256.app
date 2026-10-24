@@ -1,0 +1,25 @@
+<section class="card auth-card face-capture-card profile-private-card" data-face-capture-mode="avatar_redraw" data-home-card="face-capture">
+  <div class="card-accent" role="presentation"></div>
+  <h1 class="face-capture-heading">@@ui.face_capture.avatar_redraw_heading@@</h1>
+  <p class="sub face-capture-lead">__AVATAR_REDRAW_LEAD__</p>
+  <p class="sub face-capture-mock-banner" id="face-mock-banner" role="status"__FACE_CAPTURE_MOCK_BANNER_ATTR__>@@ui.face_capture.mock_mode_banner@@</p>
+  <p class="err" id="face-capture-err" hidden role="alert"></p>
+  <p class="success" id="face-capture-success" hidden role="status"></p>
+  <div class="face-capture-video-wrap">
+    <video id="face-video" class="face-capture-video" playsinline muted autoplay></video>
+    <div class="face-capture-face-guide" aria-hidden="true"></div>
+  </div>
+  <p class="face-capture-status sub" id="face-capture-status" aria-live="polite"></p>
+  <canvas id="face-work-canvas" class="face-capture-work-canvas" width="512" height="512" hidden></canvas>
+  <div class="face-capture-actions" id="face-capture-actions">
+    <button type="button" class="auth-text-btn btn-cta" id="face-btn-start">@@ui.face_capture.start_camera@@</button>
+    <button type="button" class="auth-text-btn" id="face-btn-reset" hidden>@@ui.face_capture.reset@@</button>
+    <button type="button" class="auth-text-btn btn-cta" id="face-btn-submit" hidden disabled>__AVATAR_REDRAW_SUBMIT__</button>
+    <button type="button" class="auth-text-btn" id="face-btn-cancel">@@ui.shared.cancel@@</button>
+  </div>
+  <div class="face-capture-submit-loader" id="face-capture-submit-loader" hidden aria-live="polite" aria-busy="true">
+    __FACE_CAPTURE_SUBMIT_LOADER__
+    <p class="sub face-capture-submit-wait" id="face-capture-submit-wait">@@ui.face_capture.submit_wait@@</p>
+  </div>
+</section>
+<script type="application/json" id="face-capture-i18n">__FACE_CAPTURE_I18N_JSON__</script>

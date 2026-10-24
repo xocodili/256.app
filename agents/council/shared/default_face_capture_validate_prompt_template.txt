@@ -1,0 +1,5 @@
+Face capture validation — three reference photos attached in order: (1) neutral, (2) smile, (3) frown). Same live session, same person — expression labels are UX nudges only.
+
+Accept when all three show one identifiable live human as the clear primary subject in a head-or-bust crop. Reject only when a photo fails the rules below.
+
+{rag_context}

@@ -1,0 +1,3 @@
+Portrait colour card — one neutral face-capture photo attached. Extract visible appearance colours for illustrated bust portraiture.
+
+{rag_context}

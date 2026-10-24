@@ -1,0 +1,24 @@
+<section class="card auth-card app-card card--action" data-onboarding-card="consent">
+  <div class="card-accent" role="presentation"></div>
+  <h1>@@ui.home_profile.terms_heading@@</h1>
+  <p class="sub">@@ui.home_profile.terms_subtitle@@</p>
+  <p class="guest-consent-rules-link">
+    <a class="auth-inline-legal-link" href="/login?legal=constitution" target="_blank" rel="noopener noreferrer">@@ui.home_profile.community_rules_read_link@@</a>
+  </p>
+  <form id="terms-consent-form" novalidate>
+    <label class="auth-check-label" for="terms-adult">
+      <input class="auth-check-input" type="checkbox" id="terms-adult" name="adult_ack" value="1" required>
+      <span class="auth-check-text">@@ui.register.adult_confirm@@</span>
+    </label>
+    <p class="hint" data-hint-for="terms-adult">@@ui.register.adult_hint@@</p>
+
+    <label class="auth-check-label" for="terms-constitution">
+      <input class="auth-check-input" type="checkbox" id="terms-constitution" name="constitution_ack" value="1" required>
+      <span class="auth-check-text">@@ui.register.constitution_confirm@@</span>
+    </label>
+    <p class="hint" data-hint-for="terms-constitution">@@ui.register.constitution_hint@@</p>
+
+    <button type="submit" id="terms-consent-submit" class="btn-cta">@@ui.home_profile.terms_submit@@</button>
+  </form>
+  <p class="err" id="terms-consent-msg" role="alert"></p>
+</section>
